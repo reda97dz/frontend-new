@@ -5,7 +5,6 @@ import {
   faBookReader,
   faHome,
   faUsers,
-  faUserTie,
 } from '@fortawesome/free-solid-svg-icons';
 import { Container } from './Sidebar.style';
 import Element from './Element';

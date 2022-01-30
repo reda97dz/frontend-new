@@ -3,6 +3,9 @@ import { useAppSelector } from 'app/hooks';
 import { selectIssue } from 'app/issueSlice';
 import { Book } from './Book';
 import { Member } from './Member';
+import { Stepper } from './Stepper';
+import { Container, Content } from './Issue.style';
+import { Summary } from './Summary';
 
 export const Issue: FC = () => {
   const issue = useAppSelector(selectIssue);
@@ -17,12 +20,16 @@ export const Issue: FC = () => {
     }
   };
   return (
-    <>
-      book: {issue.bookId}
-      <br />
-      member: {issue.memberId}
-      <br />
-      {renderSwitch(issue.step)}
-    </>
+    <Container>
+      <Stepper />
+      <Content>
+        book: {issue.bookId}
+        <br />
+        member: {issue.memberId}
+        <br />
+        {renderSwitch(issue.step)}
+      </Content>
+      <Summary />
+    </Container>
   );
 };
