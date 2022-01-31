@@ -4,10 +4,17 @@ declare module '*.svg' {
   export default content;
 }
 declare module '*.ttf';
+
+interface Borrow {
+  id: number;
+  book: number;
+}
 export interface Member {
   firstName: string;
   lastName: string;
   membershipNumber: string;
+  id: string;
+  active: Borrow[];
 }
 
 export type FetchError = {

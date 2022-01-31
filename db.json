@@ -4,19 +4,40 @@
       "id": 1,
       "firstName": "Reda",
       "lastName": "Baka",
-      "membershipNumber": "A-1258"
+      "membershipNumber": "A-1258",
+      "active": [
+        {
+          "id": 1,
+          "book": 1
+        }
+      ]
     },
     {
       "id": 2,
       "firstName": "Amine",
       "lastName": "Belmahi",
-      "membershipNumber": "A-0155"
+      "membershipNumber": "A-0155",
+      "active": []
     },
     {
       "id": 3,
       "firstName": "Ramzi",
       "lastName": "Hendel",
-      "membershipNumber": "A-2225"
+      "membershipNumber": "A-2225",
+      "active": [
+        {
+          "id": 3,
+          "book": 1
+        },
+        {
+          "id": 4,
+          "book": 1
+        },
+        {
+          "id": 5,
+          "book": 1
+        }
+      ]
     }
   ]
 }
