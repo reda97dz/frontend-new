@@ -1,4 +1,4 @@
-import { faAngleDoubleDown, faArrowDown, faCheckSquare, faDiceOne, faDiceTwo } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDoubleDown, faArrowDown, faCheckSquare, faDiceOne, faDiceThree, faDiceTwo } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { FC } from 'react'
 import { Container, Step, Icon } from './Stepper.style'
@@ -10,19 +10,25 @@ export const Stepper: FC = () => {
 
   return (
     <Container>
-      <Step active={issue.step >= 1}>
+      <Step active={issue.step > 0}>
         <Icon>
           <FontAwesomeIcon icon={faDiceOne} />
         </Icon>
         <p>Select a member</p>
       </Step>
-      <Step active={issue.step >= 2}>
+      <Step active={issue.step > 1}>
         <Icon>
           <FontAwesomeIcon icon={faDiceTwo} />
         </Icon>
         <p>Select a book</p>
       </Step>
-      <Step active={issue.step === 3}>
+      <Step active={issue.step > 2}>
+        <Icon>
+          <FontAwesomeIcon icon={faDiceThree} />
+        </Icon>
+        <p>Summary</p>
+      </Step>
+      <Step active={issue.step > 3}>
         <Icon>
           <FontAwesomeIcon icon={faCheckSquare} />
         </Icon>

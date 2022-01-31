@@ -11,9 +11,9 @@ export const Member: FC = () => {
   const handleClick = () => dispatch(fetchMembers())
   return (
     <div>
-      <button type="button" onClick={handleClick}>
+      {/* <button type="button" onClick={handleClick}>
         {status === 'pending' ? 'loading members' : status === 'failed' ? 'failed' : status === 'succeeded' ? "loaded members" : 'CLick'}
-      </button>
+      </button> */}
       <input type="text" value={issue.memberId} placeholder='select Member' onChange={(e) => dispatch(setMember(e.target.value))} />
       {issue.memberId.length > 0 ? (
         <button type='button' onClick={() => dispatch(nextStep())}>
