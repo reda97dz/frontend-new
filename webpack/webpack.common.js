@@ -31,6 +31,7 @@ module.exports = {
       stories: path.resolve(__dirname, '..', 'src', 'stories'),
       utils: path.resolve(__dirname, '..', 'src', 'utils'),
       app: path.resolve(__dirname, '..', 'src', 'app'),
+      services: path.resolve(__dirname, '..', 'src', 'services'),
     },
   },
   devServer: {

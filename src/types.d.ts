@@ -4,3 +4,12 @@ declare module '*.svg' {
   export default content;
 }
 declare module '*.ttf';
+export interface Member {
+  firstName: string;
+  lastName: string;
+  membershipNumber: string;
+}
+
+export type FetchError = {
+  message: string;
+};
