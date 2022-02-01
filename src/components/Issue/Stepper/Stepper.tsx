@@ -1,4 +1,4 @@
-import { faAngleDoubleDown, faArrowDown, faCheckSquare, faDiceOne, faDiceThree, faDiceTwo } from '@fortawesome/free-solid-svg-icons'
+import { faCheckSquare, faDiceOne, faDiceThree, faDiceTwo } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { FC } from 'react'
 import { Container, Step, Icon } from './Stepper.style'

@@ -1,45 +1,40 @@
-import { selectMembers } from "app/membersSlice";
-import { useAppDispatch, useAppSelector } from "app/hooks";
-import { nextStep, resetIssue, selectIssue, setMember, setMemberState } from "app/issueSlice";
-import { fetchMembers } from 'app/membersSlice'
-import { fetchMemberById, selectMember } from "app/memberSlice";
-import { FC, useEffect, useState } from "react";
-import { notEmpty } from "utils/misc";
-import { SelectSearch } from "../SelectSearch";
-import { Member as MemberType } from "types";
+import { selectMembers } from 'app/membersSlice';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { nextStep, resetIssue, setMemberState } from 'app/issueSlice';
+import { fetchMembers } from 'app/membersSlice';
+import { fetchMemberById, selectMember } from 'app/memberSlice';
+import { FC, useEffect } from 'react';
+import { notEmpty } from 'utils/misc';
+import { SelectSearch } from '../SelectSearch';
+import { Member as MemberType } from 'types';
 
 export const Member: FC = () => {
   const dispatch = useAppDispatch();
-  const members = useAppSelector(selectMembers)
-  const member = useAppSelector(selectMember)
-  const issue = useAppSelector(selectIssue);
-
-  const [open, setOpen] = useState(false);
+  const members = useAppSelector(selectMembers);
+  const member = useAppSelector(selectMember);
 
   useEffect(() => {
-    getMembers()
+    getMembers();
   }, []);
 
   async function getMembers() {
-    dispatch(fetchMembers())
+    dispatch(fetchMembers());
   }
 
   async function fetchMember(memberId: number) {
-    dispatch(fetchMemberById(memberId))
+    dispatch(fetchMemberById(memberId));
   }
-
 
   const onClick = (member: MemberType) => {
     dispatch(resetIssue());
     dispatch(fetchMemberById(Number(member.id)));
     dispatch(setMemberState(3 - member.active.length));
-  }
+  };
 
   return (
     <div>
-
       {notEmpty(member) ? (
-        <button type='button' onClick={() => dispatch(nextStep())}>
+        <button type="button" onClick={() => dispatch(nextStep())}>
           next
         </button>
       ) : (
@@ -47,11 +42,7 @@ export const Member: FC = () => {
       )}
 
       <br />
-      <SelectSearch
-        options={members}
-        onClick={onClick}
-        type='member'
-      />
+      <SelectSearch options={members} onClick={onClick} type="member" />
     </div>
   );
 };

@@ -11,7 +11,7 @@ import { resetMember } from 'app/memberSlice';
 
 export const Issue: FC = () => {
   const issue = useAppSelector(selectIssue);
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   const renderSwitch = (s: number) => {
     switch (s) {
       case 1:
@@ -19,20 +19,23 @@ export const Issue: FC = () => {
       case 2:
         return <Book />;
       case 3:
-        return <Summary />
+        return <Summary />;
       default:
-        return <>Book issued. Done! {setTimeout(() => {
-          dispatch(resetIssue());
-          dispatch(resetMember());
-        }, 3000)} </>;
+        return (
+          <>
+            Book issued. Done!{' '}
+            {setTimeout(() => {
+              dispatch(resetIssue());
+              dispatch(resetMember());
+            }, 3000)}{' '}
+          </>
+        );
     }
   };
   return (
     <Container>
       <Stepper />
-      <Content>
-        {renderSwitch(issue.step)}
-      </Content>
+      <Content>{renderSwitch(issue.step)}</Content>
     </Container>
   );
 };
