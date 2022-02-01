@@ -1,15 +1,18 @@
+
 import { fetchBooks, selectBooks } from 'app/booksSlice';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import {
   addBookOption,
-  nextStep,
-  previousStep,
   removeBook,
   selectIssue,
   setBook,
 } from 'app/issueSlice';
 import React, { FC, useEffect } from 'react';
+import { BackButton, ProceedButton } from '..';
+import { InfoContainer, StepContent, StepProceed, StepTitle } from '../Issue.style';
+import { SearchContainer } from '../Member/Member.style';
 import { SelectSearch } from '../SelectSearch';
+import { Container } from './Book.style';
 
 export const Book: FC = () => {
   const dispatch = useAppDispatch();
@@ -33,36 +36,45 @@ export const Book: FC = () => {
   };
   return (
     <div>
-      <button type="button" onClick={() => dispatch(previousStep())}>
-        back
-      </button>
+      <InfoContainer>
+        <StepTitle>
+          <BackButton />
+          <h3>Choosing a book</h3>
+        </StepTitle>
+        <StepContent>
+          <Container>
+            <SearchContainer>
+              <p>Search for a book</p>
+              {issue.memberState > 0 &&
+                issue.bookIds.map((_, i) => (
+                  <React.Fragment key={Math.random()}>
+                    <SelectSearch
+                      number={i}
+                      onClick={onClick}
+                      options={books}
+                      type="book"
+                      onDelete={onDelete}
+                    />
+                  </React.Fragment>
+                ))}
+              {issue.memberState > 1 ? (
+                <button type="button" onClick={() => dispatch(addBookOption())}>
+                  Issue more
+                </button>
+              ) : (
+                <p>Member has reached maximum borrowed book</p>
+              )}
+            </SearchContainer>
+          </Container>
+        </StepContent>
+        <StepProceed>
+          {!issue.bookIds.some(element => element === '') && (
+            <ProceedButton />
+          )}
+        </StepProceed>
+      </InfoContainer>
       <br />
-      {issue.memberState > 0 &&
-        issue.bookIds.map((_, i) => (
-          <React.Fragment key={Math.random()}>
-            <SelectSearch
-              number={i}
-              onClick={onClick}
-              options={books}
-              type="book"
-              onDelete={onDelete}
-            />
-          </React.Fragment>
-        ))}
       <br />
-      {issue.memberState > 1 ? (
-        <button type="button" onClick={() => dispatch(addBookOption())}>
-          Issue more
-        </button>
-      ) : (
-        <p>Member has reached maximum borrowed book</p>
-      )}
-      <br />
-      {!issue.bookIds.some(element => element === '') && (
-        <button type="button" onClick={() => dispatch(nextStep())}>
-          verify
-        </button>
-      )}
     </div>
   );
 };

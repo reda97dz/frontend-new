@@ -3,6 +3,8 @@ import { useAppSelector } from 'app/hooks';
 import { FC, useState } from 'react';
 import { Book, Member } from 'types';
 import { selectIssue } from 'app/issueSlice';
+import { Option, Options, SelectSearchContainer } from './SelectSearch.style';
+import ClickAwayListener from 'react-click-away-listener';
 
 interface SelectSearchBookProps {
   type: 'book';
@@ -43,19 +45,21 @@ export const SelectSearch: FC<SelectSearchProps> = (props) => {
     <div>
       {props.type === 'book' ? (
         <>
-          <button type="button" onClick={() => setOpen(!open)}>
-            {issue.bookIds[props.number] || 'select a book'}
-          </button>
+          <SelectSearchContainer onClick={() => setOpen(!open)}>
+            <input type="text" value={issue.bookIds[props.number] || 'select a book'} />
+          </SelectSearchContainer>
           {open && (
-            <ul>
-              {props.options
-                .filter((b) => !issue.bookIds.includes(b.id))
-                .map((option) => (
-                  <li key={option.id} onClick={() => onClickBook(option, props.number)}>
-                    {option.title}
-                  </li>
-                ))}
-            </ul>
+            <ClickAwayListener onClickAway={() => setOpen(false)}>
+              <Options>
+                {props.options
+                  .filter((b) => !issue.bookIds.includes(b.id))
+                  .map((option) => (
+                    <Option key={option.id} onClick={() => onClickBook(option, props.number)}>
+                      {option.title}
+                    </Option>
+                  ))}
+              </Options>
+            </ClickAwayListener>
           )}
           {(props.number != 0 || issue.bookIds.length > 1) && (
             <button type="button" onClick={() => onDeleteBook(props.number)}>
@@ -65,19 +69,19 @@ export const SelectSearch: FC<SelectSearchProps> = (props) => {
         </>
       ) : (
         <>
-          <button type="button" onClick={() => setOpen(!open)}>
-            {' '}
-            {member.lastName || 'Select a member'}{' '}
-          </button>
+          <SelectSearchContainer onClick={() => setOpen(!open)}>
+            <input type="text" value={member.lastName || 'select a member'} />
+          </SelectSearchContainer>
           {open && (
-            <ul>
-              {props.options.map((option) => (
-                <li key={option.id} onClick={() => onClickMember(option)}>
-                  {' '}
-                  {option.firstName} {option.lastName}{' '}
-                </li>
-              ))}
-            </ul>
+            <ClickAwayListener onClickAway={() => setOpen(false)}>
+              <Options>
+                {props.options.map((option) => (
+                  <Option key={option.id} onClick={() => onClickMember(option)}>
+                    {option.firstName} {option.lastName}
+                  </Option>
+                ))}
+              </Options>
+            </ClickAwayListener>
           )}
         </>
       )}

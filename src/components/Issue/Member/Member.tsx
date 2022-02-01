@@ -1,12 +1,18 @@
 import { selectMembers } from 'app/membersSlice';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { nextStep, resetIssue, setMemberState } from 'app/issueSlice';
+import { resetIssue, setMemberState } from 'app/issueSlice';
 import { fetchMembers } from 'app/membersSlice';
 import { fetchMemberById, selectMember } from 'app/memberSlice';
 import { FC, useEffect } from 'react';
 import { notEmpty } from 'utils/misc';
 import { SelectSearch } from '../SelectSearch';
 import { Member as MemberType } from 'types';
+import { Icon, InfoContainer, StepContent, StepProceed, StepTitle } from '../Issue.style';
+import { Icon as Logo } from '../Stepper/Stepper.style';
+import { Container, DisplayContainer, SearchContainer, Header } from './Member.style';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { ProceedButton } from '..';
 
 export const Member: FC = () => {
   const dispatch = useAppDispatch();
@@ -33,16 +39,40 @@ export const Member: FC = () => {
 
   return (
     <div>
-      {notEmpty(member) ? (
-        <button type="button" onClick={() => dispatch(nextStep())}>
-          next
-        </button>
-      ) : (
-        <>Please select a member to continue</>
-      )}
-
-      <br />
-      <SelectSearch options={members} onClick={onClick} type="member" />
+      <InfoContainer>
+        <StepTitle first>
+          <Icon />
+          <h3>Choosing a member</h3>
+        </StepTitle>
+        <StepContent>
+          <Container>
+            <SearchContainer>
+              <p>Search for a member</p>
+              <SelectSearch options={members} onClick={onClick} type="member" />
+            </SearchContainer>
+            <DisplayContainer>
+              {notEmpty(member) && (
+                <>
+                  <Header>
+                    <Logo>
+                      <FontAwesomeIcon icon={faUser} />
+                    </Logo>
+                    <p> {member.firstName} {member.lastName} </p>
+                  </Header>
+                  <p> {member.membershipNumber} </p>
+                  <p> {member.active.length} books currently borrowed. </p>
+                </>)}
+            </DisplayContainer>
+          </Container>
+        </StepContent>
+        <StepProceed>
+          {notEmpty(member) ? (
+            <ProceedButton />
+          ) : (
+            <span>must choose a member to continue</span>
+          )}
+        </StepProceed>
+      </InfoContainer>
     </div>
   );
 };

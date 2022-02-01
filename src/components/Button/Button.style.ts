@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 
 export const Btn = styled.button<{ color: string }>`
-  padding: 0.5em 1em;
+  padding: 0.2em 1em;
   background-color: ${(props) => props.color};
   color: #eaeaea;
   font-family: 'Cairo';
   font-size: 0.9rem;
   font-weight: bold;
   cursor: pointer;
-  border-radius: 2px;
+  border-radius: 4px;
   :hover {
     opacity: 0.9;
   }
