@@ -58,7 +58,7 @@ export const Book: FC = () => {
         <p>Member has reached maximum borrowed book</p>
       )}
       <br />
-      {issue.bookIds[0] != '' && (
+      {!issue.bookIds.some(element => element === '') && (
         <button type="button" onClick={() => dispatch(nextStep())}>
           verify
         </button>
