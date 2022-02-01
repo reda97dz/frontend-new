@@ -1,7 +1,9 @@
 import { fetchBooks, selectBooks } from "app/booksSlice";
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { addBookOption, nextStep, previousStep, selectIssue, setBook } from "app/issueSlice";
+import { addBookOption, nextStep, previousStep, removeBook, selectIssue, setBook } from "app/issueSlice";
 import React, { FC, useEffect, useState } from "react";
+import { Book as BookType } from "types";
+import { SelectSearch } from "../SelectSearch";
 
 export const Book: FC = () => {
   const dispatch = useAppDispatch();
@@ -18,6 +20,13 @@ export const Book: FC = () => {
     dispatch(fetchBooks())
   }
 
+  const onClick = (bookId: string, index: number) => {
+    dispatch(setBook({ book: bookId, number: index }))
+  }
+
+  const onDelete = (index: number) => {
+    dispatch(removeBook(index))
+  }
   return (
     <div>
       <button type="button" onClick={() => dispatch(previousStep())}>
@@ -25,16 +34,15 @@ export const Book: FC = () => {
       </button>
       <br />
       {issue.memberState > 0 && (
-        issue.bookIds.map((b) => (
+        issue.bookIds.map((_, i) => (
           <React.Fragment key={Math.random()}>
-            <button type="button" onClick={() => setOpen(!open)}>{`select a book`}</button>
-            {open && (
-              <ul>
-                {books.map((book) => (
-                  <li key={book.id}> {book.title} </li>
-                ))}
-              </ul>
-            )}
+            <SelectSearch
+              number={i}
+              onClick={onClick}
+              options={books}
+              type='book'
+              onDelete={onDelete}
+            />
           </React.Fragment>
         )))}
       <br />

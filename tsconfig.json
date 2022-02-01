@@ -16,10 +16,7 @@
     "allowJs": true /* Allow javascript files to be compiled. Useful when migrating JS to TS */,
     "allowSyntheticDefaultImports": true,
     // "checkJs": true /* Report errors in .js files. Works in tandem with allowJs. */,
-    "baseUrl": "src",
-    "paths": {
-      "@app/*": ["app/*"]
-    }
+    "baseUrl": "src"
   },
   "include": ["src", "**/*.ts", "**/*.tsx", "src/types.d.ts"],
   "exclude": ["./node_modules", "./public", "./dist", "./.vscode"]

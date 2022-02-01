@@ -5,6 +5,8 @@ import { fetchMembers } from 'app/membersSlice'
 import { fetchMemberById, selectMember } from "app/memberSlice";
 import { FC, useEffect, useState } from "react";
 import { notEmpty } from "utils/misc";
+import { SelectSearch } from "../SelectSearch";
+import { Member as MemberType } from "types";
 
 export const Member: FC = () => {
   const dispatch = useAppDispatch();
@@ -26,6 +28,13 @@ export const Member: FC = () => {
     dispatch(fetchMemberById(memberId))
   }
 
+
+  const onClick = (member: MemberType) => {
+    dispatch(reset());
+    dispatch(fetchMemberById(Number(member.id)));
+    dispatch(setMemberState(3 - member.active.length));
+  }
+
   return (
     <div>
 
@@ -38,15 +47,19 @@ export const Member: FC = () => {
       )}
 
       <br />
-
-      <button type='button' onClick={() => setOpen(!open)}>{member.firstName || `select a member`}</button>
+      <SelectSearch
+        options={members}
+        onClick={onClick}
+        type='member'
+      />
+      {/* <button type='button' onClick={() => setOpen(!open)}>{member.firstName || `select a member`}</button>
       {open && (
         <ul>
           {members.map((m) => (
             <li key={m.id} onClick={() => { dispatch(reset()); dispatch(fetchMemberById(Number(m.id))); dispatch(setMemberState(3 - m.active.length)) }} >{m.firstName}</li>
           ))}
         </ul>
-      )}
+      )} */}
     </div>
   );
 };
