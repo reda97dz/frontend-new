@@ -43,6 +43,7 @@ export const SelectSearch: FC<SelectSearchProps> = (props) => {
     <div>
       {props.type === 'book' ? (
         <>
+          ---- {props.number}
           <button type='button' onClick={() => setOpen(!open)}>
             {issue.bookIds[props.number] || 'select a book'}
           </button>
@@ -55,7 +56,7 @@ export const SelectSearch: FC<SelectSearchProps> = (props) => {
               ))}
             </ul>
           )}
-          {props.number != 0 && <button type="button" onClick={() => onDeleteBook(props.number)}>remove</button>}
+          {(props.number != 0 || issue.bookIds.length > 1) && <button type="button" onClick={() => onDeleteBook(props.number)}>remove</button>}
         </>
       ) : (
         <>
