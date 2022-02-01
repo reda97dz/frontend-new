@@ -17,14 +17,7 @@ interface ProceedButtonProps {
 /* eslint-disable react/require-default-props */
 export const ProceedButton: FC<ProceedButtonProps> = (props) => {
   const dispatch = useAppDispatch();
-  return (
-    <Button
-      text="Proceed"
-      color="#294c60"
-      onClick={() => dispatch(nextStep())}
-      {...props}
-    />
-  );
+  return <Button text="Proceed" color="#294c60" onClick={() => dispatch(nextStep())} {...props} />;
 };
 
 export const BackButton: FC = () => {
