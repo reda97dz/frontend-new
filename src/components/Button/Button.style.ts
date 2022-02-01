@@ -15,5 +15,10 @@ export const Btn = styled.button<{ color: string }>`
   &:active {
     transform: scale(0.98);
   }
+  :disabled {
+    background-color: gainsboro;
+    cursor: auto;
+    color: #1e1e1e;
+  }
   border: none;
 `;

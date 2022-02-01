@@ -1,12 +1,6 @@
-
 import { fetchBooks, selectBooks } from 'app/booksSlice';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import {
-  addBookOption,
-  removeBook,
-  selectIssue,
-  setBook,
-} from 'app/issueSlice';
+import { addBookOption, removeBook, selectIssue, setBook } from 'app/issueSlice';
 import React, { FC, useEffect } from 'react';
 import { BackButton, ProceedButton } from '..';
 import { InfoContainer, StepContent, StepProceed, StepTitle } from '../Issue.style';
@@ -68,9 +62,7 @@ export const Book: FC = () => {
           </Container>
         </StepContent>
         <StepProceed>
-          {!issue.bookIds.some(element => element === '') && (
-            <ProceedButton />
-          )}
+          <ProceedButton disabled={issue.bookIds.some((element) => element === '')} />
         </StepProceed>
       </InfoContainer>
       <br />

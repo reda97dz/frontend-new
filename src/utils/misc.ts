@@ -1,3 +1,1 @@
-export const notEmpty = (obj: Object) => {
-  return Object.keys(obj).length > 0;
-};
+export const notEmpty = (obj: Object) => Object.keys(obj).length > 0;

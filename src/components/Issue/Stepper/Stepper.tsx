@@ -1,12 +1,17 @@
-import { faCheckSquare, faDiceOne, faDiceThree, faDiceTwo } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { FC } from 'react'
-import { Container, Step, Icon } from './Stepper.style'
-import { selectIssue } from 'app/issueSlice'
-import { useAppSelector } from 'app/hooks'
+import {
+  faCheckSquare,
+  faDiceOne,
+  faDiceThree,
+  faDiceTwo,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FC } from 'react';
+import { selectIssue } from 'app/issueSlice';
+import { useAppSelector } from 'app/hooks';
+import { Container, Step, Icon } from './Stepper.style';
 
 export const Stepper: FC = () => {
-  const issue = useAppSelector(selectIssue)
+  const issue = useAppSelector(selectIssue);
 
   return (
     <Container>
@@ -35,5 +40,5 @@ export const Stepper: FC = () => {
         <p>All Done!</p>
       </Step>
     </Container>
-  )
-}
+  );
+};

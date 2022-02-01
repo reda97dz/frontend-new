@@ -39,6 +39,6 @@ export const Header = styled(Step)`
   background-color: transparent;
   color: #eaeaea;
   > p {
-    color: #eaeaea;
+    color: #03a10a;
   }
 `;

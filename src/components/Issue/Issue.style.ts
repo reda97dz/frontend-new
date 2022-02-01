@@ -45,15 +45,16 @@ export const StepTitle = styled.div<{ first?: boolean }>`
   }
 `;
 
-export const Icon = styled.div`
+export const Icon = styled.div<{ disabled?: boolean }>`
   border-radius: 5em;
   min-width: 0.7em;
   cursor: pointer;
+  ${(props) => props.disabled && 'opacity: 0.2'};
   :active {
     transform: scale(0.95);
   }
   :hover {
-    opacity: 0.98;
+    ${(props) => !props.disabled && 'opacity: 0.98'};
   }
 `;
 
