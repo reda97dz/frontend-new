@@ -1,9 +1,10 @@
 import { selectMembers } from "app/membersSlice";
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { nextStep, selectIssue, setMember, setMemberState } from "app/issueSlice";
+import { nextStep, reset, selectIssue, setMember, setMemberState } from "app/issueSlice";
 import { fetchMembers } from 'app/membersSlice'
 import { fetchMemberById, selectMember } from "app/memberSlice";
 import { FC, useEffect, useState } from "react";
+import { notEmpty } from "utils/misc";
 
 export const Member: FC = () => {
   const dispatch = useAppDispatch();
@@ -21,21 +22,14 @@ export const Member: FC = () => {
     dispatch(fetchMembers())
   }
 
-  const handleChange = (e: any) => {
-    console.log(e.target.value);
-    fetchMember(e.target.value)
-  }
-
   async function fetchMember(memberId: number) {
     dispatch(fetchMemberById(memberId))
   }
 
-  // const handleClick = () => dispatch(fetchMembers())
   return (
     <div>
 
-      <input type="text" value={issue.memberId} placeholder='select Member' onChange={(e) => dispatch(setMember(e.target.value))} />
-      {issue.memberId.length > 0 ? (
+      {notEmpty(member) ? (
         <button type='button' onClick={() => dispatch(nextStep())}>
           next
         </button>
@@ -49,15 +43,10 @@ export const Member: FC = () => {
       {open && (
         <ul>
           {members.map((m) => (
-            <li key={m.id} onClick={() => { dispatch(fetchMemberById(Number(m.id))); dispatch(setMemberState(3 - m.active.length)) }} >{m.firstName}</li>
+            <li key={m.id} onClick={() => { dispatch(reset()); dispatch(fetchMemberById(Number(m.id))); dispatch(setMemberState(3 - m.active.length)) }} >{m.firstName}</li>
           ))}
         </ul>
       )}
-
-      {/*
-      <button type="button" onClick={handleClick}>
-        {status === 'pending' ? 'loading members' : status === 'failed' ? 'failed' : status === 'succeeded' ? "loaded members" : 'CLick'}
-      </button> */}
     </div>
   );
 };
