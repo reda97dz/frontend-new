@@ -37,7 +37,7 @@ const Sidebar: FC = () => {
   return (
     <Container>
       {pages.map((page) => (
-        <NavLink to={page.path}>
+        <NavLink to={page.path} key={page.path}>
           <Element
             title={page.title}
             path={page.path}

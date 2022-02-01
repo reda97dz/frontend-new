@@ -1,11 +1,13 @@
 import { FC } from 'react';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { previousStep, selectIssue } from 'app/issueSlice';
-import { issueBook, reset } from 'app/issueSlice';
+import { selectIssue } from 'app/issueSlice';
+import { resetIssue } from 'app/issueSlice';
 import { Book } from './Book';
 import { Member } from './Member';
 import { Stepper } from './Stepper';
 import { Container, Content } from './Issue.style';
+import { Summary } from 'components/Summary';
+import { resetMember } from 'app/memberSlice';
 
 export const Issue: FC = () => {
   const issue = useAppSelector(selectIssue);
@@ -17,13 +19,11 @@ export const Issue: FC = () => {
       case 2:
         return <Book />;
       case 3:
-        return <> <button type='button' onClick={() => dispatch(previousStep())}>back</button>
-          {issue.bookId} by {issue.memberId}
-          <button type='button' onClick={() => dispatch(issueBook())}>Confirm</button>
-        </>
+        return <Summary />
       default:
         return <>Book issued. Done! {setTimeout(() => {
-          dispatch(reset())
+          dispatch(resetIssue());
+          dispatch(resetMember());
         }, 3000)} </>;
     }
   };

@@ -1,16 +1,13 @@
 import { fetchBooks, selectBooks } from "app/booksSlice";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { addBookOption, nextStep, previousStep, removeBook, selectIssue, setBook } from "app/issueSlice";
-import React, { FC, useEffect, useState } from "react";
-import { Book as BookType } from "types";
+import React, { FC, useEffect } from "react";
 import { SelectSearch } from "../SelectSearch";
 
 export const Book: FC = () => {
   const dispatch = useAppDispatch();
   const books = useAppSelector(selectBooks)
   const issue = useAppSelector(selectIssue);
-
-  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     getBooks();
@@ -51,6 +48,8 @@ export const Book: FC = () => {
       ) : (
         <p>Member has reached maximum borrowed book</p>
       )}
+      <br />
+      {issue.bookIds[0] != '' && <button type="button" onClick={() => dispatch(nextStep())} >verify</button>}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { selectMembers } from "app/membersSlice";
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { nextStep, reset, selectIssue, setMember, setMemberState } from "app/issueSlice";
+import { nextStep, resetIssue, selectIssue, setMember, setMemberState } from "app/issueSlice";
 import { fetchMembers } from 'app/membersSlice'
 import { fetchMemberById, selectMember } from "app/memberSlice";
 import { FC, useEffect, useState } from "react";
@@ -30,7 +30,7 @@ export const Member: FC = () => {
 
 
   const onClick = (member: MemberType) => {
-    dispatch(reset());
+    dispatch(resetIssue());
     dispatch(fetchMemberById(Number(member.id)));
     dispatch(setMemberState(3 - member.active.length));
   }
@@ -52,14 +52,6 @@ export const Member: FC = () => {
         onClick={onClick}
         type='member'
       />
-      {/* <button type='button' onClick={() => setOpen(!open)}>{member.firstName || `select a member`}</button>
-      {open && (
-        <ul>
-          {members.map((m) => (
-            <li key={m.id} onClick={() => { dispatch(reset()); dispatch(fetchMemberById(Number(m.id))); dispatch(setMemberState(3 - m.active.length)) }} >{m.firstName}</li>
-          ))}
-        </ul>
-      )} */}
     </div>
   );
 };
