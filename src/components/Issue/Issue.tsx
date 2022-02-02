@@ -1,15 +1,39 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { previousStep, selectIssue } from 'app/issueSlice';
-import { issueBook, reset } from 'app/issueSlice';
+import { nextStep, previousStep, selectIssue, resetIssue } from 'app/issueSlice';
+import { Summary } from 'components/Summary';
+import { resetMember } from 'app/memberSlice';
+import Button from 'components/Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { Container, Content, Icon, ModalBackdrop } from './Issue.style';
+import { Stepper } from './Stepper';
 import { Book } from './Book';
 import { Member } from './Member';
-import { Stepper } from './Stepper';
-import { Container, Content } from './Issue.style';
+
+interface ProceedButtonProps {
+  [x: string]: any;
+}
+/* eslint-disable react/require-default-props */
+export const ProceedButton: FC<ProceedButtonProps> = (props) => {
+  const dispatch = useAppDispatch();
+  return <Button text="Proceed" color="#03a10a" onClick={() => dispatch(nextStep())} {...props} />;
+};
+
+export const BackButton: FC = () => {
+  const dispatch = useAppDispatch();
+  return (
+    <Icon onClick={() => dispatch(previousStep())}>
+      <FontAwesomeIcon icon={faChevronLeft} size="lg" color="#eaeaea" />
+    </Icon>
+  );
+};
 
 export const Issue: FC = () => {
+  const [open, setOpen] = useState(true);
+  const toggleIssue = () => setOpen(!open);
   const issue = useAppSelector(selectIssue);
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   const renderSwitch = (s: number) => {
     switch (s) {
       case 1:
@@ -17,22 +41,31 @@ export const Issue: FC = () => {
       case 2:
         return <Book />;
       case 3:
-        return <> <button type='button' onClick={() => dispatch(previousStep())}>back</button>
-          {issue.bookId} by {issue.memberId}
-          <button type='button' onClick={() => dispatch(issueBook())}>Confirm</button>
-        </>
+        return <Summary />;
       default:
-        return <>Book issued. Done! {setTimeout(() => {
-          dispatch(reset())
-        }, 3000)} </>;
+        return (
+          <>
+            Book issued. Done!{' '}
+            {setTimeout(() => {
+              dispatch(resetIssue());
+              dispatch(resetMember());
+            }, 3000)}{' '}
+          </>
+        );
     }
   };
   return (
-    <Container>
-      <Stepper />
-      <Content>
-        {renderSwitch(issue.step)}
-      </Content>
-    </Container>
+    <div>
+      <Button text="Issue a book" onClick={toggleIssue} />
+      {open && (
+        <div>
+          <ModalBackdrop onClick={toggleIssue} />
+          <Container>
+            <Stepper />
+            <Content>{renderSwitch(issue.step)}</Content>
+          </Container>
+        </div>
+      )}
+    </div>
   );
 };
