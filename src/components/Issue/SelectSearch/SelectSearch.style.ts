@@ -42,7 +42,7 @@ export const Options = styled.ul`
   width: 16.14em;
   position: absolute;
   padding: 0;
-  max-height: 8em;
+  max-height: 12em;
   border-radius: 4px;
   margin-top: 0.2em;
   background-color: #fff;

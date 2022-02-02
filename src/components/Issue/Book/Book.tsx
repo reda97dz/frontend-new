@@ -3,10 +3,11 @@ import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { addBookOption, removeBook, selectIssue, setBook } from 'app/issueSlice';
 import React, { FC, useEffect } from 'react';
 import { BackButton, ProceedButton } from '..';
-import { InfoContainer, StepContent, StepProceed, StepTitle } from '../Issue.style';
+import { InfoContainer, StepContent, StepTitle, Title } from '../Issue.style';
 import { SearchContainer } from '../Member/Member.style';
 import { SelectSearch } from '../SelectSearch';
-import { Container } from './Book.style';
+import { Container, MoreButton } from './Book.style';
+import { BookInfo } from './BookInfo/BookInfo';
 
 export const Book: FC = () => {
   const dispatch = useAppDispatch();
@@ -32,38 +33,46 @@ export const Book: FC = () => {
     <div>
       <InfoContainer>
         <StepTitle>
-          <BackButton />
-          <h3>Choosing a book</h3>
+          <Title>
+            <BackButton />
+            <h3>Choosing a book</h3>
+          </Title>
+          <ProceedButton disabled={issue.bookIds.some((element) => element === '')} />
         </StepTitle>
         <StepContent>
           <Container>
             <SearchContainer>
-              <p>Search for a book</p>
               {issue.memberState > 0 &&
-                issue.bookIds.map((_, i) => (
+                issue.bookIds.map((b, i) => (
                   <React.Fragment key={Math.random()}>
-                    <SelectSearch
-                      number={i}
-                      onClick={onClick}
-                      options={books}
-                      type="book"
-                      onDelete={onDelete}
-                    />
+                    {issue.bookIds[i] === '' && (
+                      <div>
+                        <p>Search for a book</p>
+                        <SelectSearch
+                          number={i}
+                          onClick={onClick}
+                          options={books}
+                          type="book"
+                          onDelete={onDelete}
+                        />
+                      </div>
+                    )}
+                    {b !== '' && (
+                      <>
+                        {' '}
+                        <BookInfo onDelete={onDelete} number={i} />{' '}
+                      </>
+                    )}
                   </React.Fragment>
                 ))}
               {issue.memberState > 1 ? (
-                <button type="button" onClick={() => dispatch(addBookOption())}>
-                  Issue more
-                </button>
+                <MoreButton text="Issue more" onClick={() => dispatch(addBookOption())} />
               ) : (
                 <p>Member has reached maximum borrowed book</p>
               )}
             </SearchContainer>
           </Container>
         </StepContent>
-        <StepProceed>
-          <ProceedButton disabled={issue.bookIds.some((element) => element === '')} />
-        </StepProceed>
       </InfoContainer>
       <br />
       <br />

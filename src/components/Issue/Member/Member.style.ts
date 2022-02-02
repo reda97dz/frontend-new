@@ -21,10 +21,8 @@ export const SearchContainer = styled.div`
 
 export const DisplayContainer = styled.div`
   display: flex;
-  flex: 1;
   border-radius: 4px;
   background-color: #294c60;
-  min-height: 5.6em;
   flex-direction: column;
   padding: 0.8em;
   > p {

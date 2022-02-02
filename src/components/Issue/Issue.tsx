@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { nextStep, previousStep, selectIssue, resetIssue } from 'app/issueSlice';
 import { Summary } from 'components/Summary';
@@ -6,7 +6,7 @@ import { resetMember } from 'app/memberSlice';
 import Button from 'components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { Container, Content, Icon } from './Issue.style';
+import { Container, Content, Icon, ModalBackdrop } from './Issue.style';
 import { Stepper } from './Stepper';
 import { Book } from './Book';
 import { Member } from './Member';
@@ -17,19 +17,21 @@ interface ProceedButtonProps {
 /* eslint-disable react/require-default-props */
 export const ProceedButton: FC<ProceedButtonProps> = (props) => {
   const dispatch = useAppDispatch();
-  return <Button text="Proceed" color="#294c60" onClick={() => dispatch(nextStep())} {...props} />;
+  return <Button text="Proceed" color="#03a10a" onClick={() => dispatch(nextStep())} {...props} />;
 };
 
 export const BackButton: FC = () => {
   const dispatch = useAppDispatch();
   return (
     <Icon onClick={() => dispatch(previousStep())}>
-      <FontAwesomeIcon icon={faChevronLeft} />
+      <FontAwesomeIcon icon={faChevronLeft} size="lg" color="#eaeaea" />
     </Icon>
   );
 };
 
 export const Issue: FC = () => {
+  const [open, setOpen] = useState(true);
+  const toggleIssue = () => setOpen(!open);
   const issue = useAppSelector(selectIssue);
   const dispatch = useAppDispatch();
   const renderSwitch = (s: number) => {
@@ -53,9 +55,17 @@ export const Issue: FC = () => {
     }
   };
   return (
-    <Container>
-      <Stepper />
-      <Content>{renderSwitch(issue.step)}</Content>
-    </Container>
+    <div>
+      <Button text="Issue a book" onClick={toggleIssue} />
+      {open && (
+        <div>
+          <ModalBackdrop onClick={toggleIssue} />
+          <Container>
+            <Stepper />
+            <Content>{renderSwitch(issue.step)}</Content>
+          </Container>
+        </div>
+      )}
+    </div>
   );
 };

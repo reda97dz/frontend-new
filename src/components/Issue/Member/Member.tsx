@@ -8,7 +8,7 @@ import { Member as MemberType } from 'types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faUser } from '@fortawesome/free-solid-svg-icons';
 import { SelectSearch } from '../SelectSearch';
-import { Icon, InfoContainer, StepContent, StepProceed, StepTitle } from '../Issue.style';
+import { Icon, InfoContainer, StepContent, StepTitle, Title } from '../Issue.style';
 import { Icon as Logo } from '../Stepper/Stepper.style';
 import { Container, DisplayContainer, SearchContainer, Header } from './Member.style';
 import { ProceedButton } from '..';
@@ -35,11 +35,14 @@ export const Member: FC = () => {
   return (
     <div>
       <InfoContainer>
-        <StepTitle first>
-          <Icon disabled>
-            <FontAwesomeIcon icon={faChevronLeft} />
-          </Icon>
-          <h3>Choosing a member</h3>
+        <StepTitle>
+          <Title>
+            <Icon disabled>
+              <FontAwesomeIcon icon={faChevronLeft} size="lg" color="#eaeaea" />
+            </Icon>
+            <h3>Choosing a member</h3>
+          </Title>
+          <ProceedButton disabled={!notEmpty(member)} />
         </StepTitle>
         <StepContent>
           <Container>
@@ -47,8 +50,8 @@ export const Member: FC = () => {
               <p>Search for a member</p>
               <SelectSearch options={members} onClick={onClick} type="member" />
             </SearchContainer>
-            <DisplayContainer>
-              {notEmpty(member) && (
+            {notEmpty(member) && (
+              <DisplayContainer>
                 <>
                   <Header>
                     <Logo>
@@ -62,13 +65,10 @@ export const Member: FC = () => {
                   <p> {member.membershipNumber} </p>
                   <p> {member.active.length} books currently borrowed. </p>
                 </>
-              )}
-            </DisplayContainer>
+              </DisplayContainer>
+            )}
           </Container>
         </StepContent>
-        <StepProceed>
-          <ProceedButton disabled={!notEmpty(member)} />
-        </StepProceed>
       </InfoContainer>
     </div>
   );
