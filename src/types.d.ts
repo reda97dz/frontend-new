@@ -20,3 +20,8 @@ export interface Member {
 export type FetchError = {
   message: string;
 };
+
+export interface Book {
+  id: string;
+  title: string;
+}

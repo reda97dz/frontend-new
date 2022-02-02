@@ -11,7 +11,14 @@ const App: FC = () => (
     <Routes>
       <Route path="/" element={<Layout> Home Page </Layout>} />
       <Route path="/counter" element={<Counter />} />
-      <Route path="/issue" element={<Layout><Issue /></Layout>} />
+      <Route
+        path="/issue"
+        element={
+          <Layout>
+            <Issue />
+          </Layout>
+        }
+      />
     </Routes>
   </BrowserRouter>
 );

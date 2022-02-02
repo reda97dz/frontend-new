@@ -1,63 +1,75 @@
-import { selectMembers } from "app/membersSlice";
-import { useAppDispatch, useAppSelector } from "app/hooks";
-import { nextStep, selectIssue, setMember, setMemberState } from "app/issueSlice";
-import { fetchMembers } from 'app/membersSlice'
-import { fetchMemberById, selectMember } from "app/memberSlice";
-import { FC, useEffect, useState } from "react";
+import { selectMembers, fetchMembers } from 'app/membersSlice';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { resetIssue, setMemberState } from 'app/issueSlice';
+import { fetchMemberById, selectMember } from 'app/memberSlice';
+import { FC, useEffect } from 'react';
+import { notEmpty } from 'utils/misc';
+import { Member as MemberType } from 'types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faUser } from '@fortawesome/free-solid-svg-icons';
+import { SelectSearch } from '../SelectSearch';
+import { Icon, InfoContainer, StepContent, StepTitle, Title } from '../Issue.style';
+import { Icon as Logo } from '../Stepper/Stepper.style';
+import { Container, DisplayContainer, SearchContainer, Header } from './Member.style';
+import { ProceedButton } from '..';
 
 export const Member: FC = () => {
   const dispatch = useAppDispatch();
-  const members = useAppSelector(selectMembers)
-  const member = useAppSelector(selectMember)
-  const issue = useAppSelector(selectIssue);
-
-  const [open, setOpen] = useState(false);
+  const members = useAppSelector(selectMembers);
+  const member = useAppSelector(selectMember);
 
   useEffect(() => {
-    getMembers()
+    getMembers();
   }, []);
 
   async function getMembers() {
-    dispatch(fetchMembers())
+    dispatch(fetchMembers());
   }
 
-  const handleChange = (e: any) => {
-    console.log(e.target.value);
-    fetchMember(e.target.value)
-  }
+  const onClick = (m: MemberType) => {
+    dispatch(resetIssue());
+    dispatch(fetchMemberById(Number(m.id)));
+    dispatch(setMemberState(3 - m.active.length));
+  };
 
-  async function fetchMember(memberId: number) {
-    dispatch(fetchMemberById(memberId))
-  }
-
-  // const handleClick = () => dispatch(fetchMembers())
   return (
     <div>
-
-      <input type="text" value={issue.memberId} placeholder='select Member' onChange={(e) => dispatch(setMember(e.target.value))} />
-      {issue.memberId.length > 0 ? (
-        <button type='button' onClick={() => dispatch(nextStep())}>
-          next
-        </button>
-      ) : (
-        <>Please select a member to continue</>
-      )}
-
-      <br />
-
-      <button type='button' onClick={() => setOpen(!open)}>{member.firstName || `select a member`}</button>
-      {open && (
-        <ul>
-          {members.map((m) => (
-            <li key={m.id} onClick={() => { dispatch(fetchMemberById(Number(m.id))); dispatch(setMemberState(3 - m.active.length)) }} >{m.firstName}</li>
-          ))}
-        </ul>
-      )}
-
-      {/*
-      <button type="button" onClick={handleClick}>
-        {status === 'pending' ? 'loading members' : status === 'failed' ? 'failed' : status === 'succeeded' ? "loaded members" : 'CLick'}
-      </button> */}
+      <InfoContainer>
+        <StepTitle>
+          <Title>
+            <Icon disabled>
+              <FontAwesomeIcon icon={faChevronLeft} size="lg" color="#eaeaea" />
+            </Icon>
+            <h3>Choosing a member</h3>
+          </Title>
+          <ProceedButton disabled={!notEmpty(member)} />
+        </StepTitle>
+        <StepContent>
+          <Container>
+            <SearchContainer>
+              <p>Search for a member</p>
+              <SelectSearch options={members} onClick={onClick} type="member" />
+            </SearchContainer>
+            {notEmpty(member) && (
+              <DisplayContainer>
+                <>
+                  <Header>
+                    <Logo>
+                      <FontAwesomeIcon icon={faUser} />
+                    </Logo>
+                    <p>
+                      {' '}
+                      {member.firstName} {member.lastName}{' '}
+                    </p>
+                  </Header>
+                  <p> {member.membershipNumber} </p>
+                  <p> {member.active.length} books currently borrowed. </p>
+                </>
+              </DisplayContainer>
+            )}
+          </Container>
+        </StepContent>
+      </InfoContainer>
     </div>
   );
 };

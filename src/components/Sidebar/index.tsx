@@ -1,11 +1,6 @@
 import { FC } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import {
-  faBook,
-  faBookReader,
-  faHome,
-  faUsers,
-} from '@fortawesome/free-solid-svg-icons';
+import { faBook, faBookReader, faHome, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { Container } from './Sidebar.style';
 import Element from './Element';
 
@@ -29,7 +24,7 @@ const pages = [
     title: 'Members',
     path: '/members',
     icon: faUsers,
-  }
+  },
 ];
 
 const Sidebar: FC = () => {
@@ -37,7 +32,7 @@ const Sidebar: FC = () => {
   return (
     <Container>
       {pages.map((page) => (
-        <NavLink to={page.path}>
+        <NavLink to={page.path} key={page.path}>
           <Element
             title={page.title}
             path={page.path}
