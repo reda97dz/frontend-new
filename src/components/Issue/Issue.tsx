@@ -15,11 +15,21 @@ interface ProceedButtonProps {
   [x: string]: any;
 }
 /* eslint-disable react/require-default-props */
+/**
+ * It renders a button that will dispatch an action to the store to move to the next step.
+ * @param props - any
+ * @returns A button with the text "Proceed" and a color of green.
+ */
 export const ProceedButton: FC<ProceedButtonProps> = (props) => {
   const dispatch = useAppDispatch();
   return <Button text="Proceed" color="#03a10a" onClick={() => dispatch(nextStep())} {...props} />;
 };
 
+/**
+ * It returns a button that, when clicked, will dispatch an action that will change the current step to
+ * the previous step
+ * @returns A button that will dispatch an action to go back to the previous step.
+ */
 export const BackButton: FC = () => {
   const dispatch = useAppDispatch();
   return (
@@ -34,6 +44,12 @@ export const Issue: FC = () => {
   const toggleIssue = () => setOpen(!open);
   const issue = useAppSelector(selectIssue);
   const dispatch = useAppDispatch();
+  /**
+   * It renders the component based on the state.
+   * @param {number} s - number
+   * @returns A switch statement is being used to return a different component depending on the value
+   * of the state.
+   */
   const renderSwitch = (s: number) => {
     switch (s) {
       case 1:
