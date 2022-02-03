@@ -1,4 +1,10 @@
-import { faBook, faEdit, faEllipsisH, faEllipsisV, faMinusCircle } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBook,
+  faEdit,
+  faEllipsisH,
+  faEllipsisV,
+  faMinusCircle,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { clearBook, removeBook, selectIssue } from 'app/issueSlice';
