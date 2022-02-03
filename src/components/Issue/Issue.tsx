@@ -6,7 +6,8 @@ import { resetMember } from 'app/memberSlice';
 import Button from 'components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { Container, Content, Icon, ModalBackdrop } from './Issue.style';
+import ClickAwayListener from 'react-click-away-listener';
+import { Container, Content, ContentContainer, Header, Icon, ModalBackdrop } from './Issue.style';
 import { Stepper } from './Stepper';
 import { Book } from './Book';
 import { Member } from './Member';
@@ -76,10 +77,17 @@ export const Issue: FC = () => {
       {open && (
         <div>
           <ModalBackdrop onClick={toggleIssue} />
-          <Container>
-            <Stepper />
-            <Content>{renderSwitch(issue.step)}</Content>
-          </Container>
+          <ClickAwayListener onClickAway={toggleIssue}>
+            <Container>
+              <Header>
+                <h3>Issuing a book</h3>
+              </Header>
+              <ContentContainer>
+                <Stepper />
+                <Content>{renderSwitch(issue.step)}</Content>
+              </ContentContainer>
+            </Container>
+          </ClickAwayListener>
         </div>
       )}
     </div>

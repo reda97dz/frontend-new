@@ -12,7 +12,7 @@ export const SelectSearchContainer = styled.div`
     font-family: 'Cairo';
     border: solid 1px #294c60;
     font-weight: bold;
-    width: 18em;
+    /* width: 18em; */
     :focus {
       cursor: text;
       outline: none;
@@ -39,7 +39,7 @@ export const SelectSearchContainer = styled.div`
 `;
 
 export const Options = styled.ul`
-  width: 16.14em;
+  width: 12.25em;
   position: absolute;
   padding: 0;
   max-height: 12em;

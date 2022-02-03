@@ -1,18 +1,48 @@
-import { faBook, faEdit, faMinusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faBook, faEdit, faEllipsisH, faEllipsisV, faMinusCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { clearBook, removeBook, selectIssue } from 'app/issueSlice';
 import { Icon } from 'components/Issue/Stepper/Stepper.style';
-import { FC } from 'react';
-import { Container, Content, Footer, Header, Title } from './BookInfo.style';
+import { FC, useState } from 'react';
+import ClickAwayListener from 'react-click-away-listener';
+import {
+  Container,
+  Content,
+  Footer,
+  Header,
+  MenuContainer,
+  MenuContent,
+  MenuItem,
+  Title,
+} from './BookInfo.style';
 
 interface Info {
   number: number;
 }
 
-export const BookInfo: FC<Info> = (props) => {
+const BookMenu: FC<Info> = (props) => {
   const issue = useAppSelector(selectIssue);
   const dispatch = useAppDispatch();
+  const [open, setOpen] = useState(false);
+  const { number } = props;
+  return (
+    <MenuContainer>
+      <FontAwesomeIcon icon={faEllipsisH} onClick={() => setOpen(!open)} color="#03a10a" />
+      {open && (
+        <ClickAwayListener onClickAway={() => setOpen(false)}>
+          <MenuContent>
+            <MenuItem onClick={() => dispatch(clearBook(number))}>Edit</MenuItem>
+            {(number !== 0 || issue.bookIds.length > 1) && (
+              <MenuItem onClick={() => dispatch(removeBook(number))}>Remove</MenuItem>
+            )}
+          </MenuContent>
+        </ClickAwayListener>
+      )}
+    </MenuContainer>
+  );
+};
+
+export const BookInfo: FC<Info> = (props) => {
   const { number } = props;
   return (
     <Container>
@@ -24,15 +54,7 @@ export const BookInfo: FC<Info> = (props) => {
           <p>Title right here</p>
         </Title>
         <div>
-          <FontAwesomeIcon icon={faEdit} color="#fff" onClick={() => dispatch(clearBook(number))} />
-          {'     '}
-          {(number !== 0 || issue.bookIds.length > 1) && (
-            <FontAwesomeIcon
-              icon={faMinusCircle}
-              color="#f00"
-              onClick={() => dispatch(removeBook(number))}
-            />
-          )}
+          <BookMenu number={number} />
         </div>
       </Header>
       <Content>

@@ -10,7 +10,20 @@ export const Container = styled.div`
   }
 `;
 
+export const GridContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
+  grid-gap: 0.5em;
+  grid-auto-flow: dense;
+`;
+export const Item = styled.div`
+  min-height: 10em;
+  display: flex;
+  flex-direction: column;
+`;
+
 export const MoreButton = styled(Button)`
+  flex: 1;
   background-color: transparent;
   border: 1px dashed #03a10a;
   padding: 0 2em;

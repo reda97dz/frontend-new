@@ -6,7 +6,7 @@ import { BackButton, ProceedButton } from '..';
 import { InfoContainer, StepContent, StepTitle, Title } from '../Issue.style';
 import { SearchContainer } from '../Member/Member.style';
 import { SelectSearch } from '../SelectSearch';
-import { Container, MoreButton } from './Book.style';
+import { Container, GridContainer, Item, MoreButton } from './Book.style';
 import { BookInfo } from './BookInfo/BookInfo';
 
 export const Book: FC = () => {
@@ -40,7 +40,40 @@ export const Book: FC = () => {
           <ProceedButton disabled={issue.bookIds.some((element) => element === '')} />
         </StepTitle>
         <StepContent>
-          <Container>
+          <GridContainer>
+            {issue.memberState > 0 &&
+              issue.bookIds.map((b, i) => (
+                <div>
+                  <>
+                    {issue.bookIds[i] === '' && (
+                      <Item key={Math.random()}>
+                        <p>Search for a book</p>
+                        <SelectSearch
+                          number={i}
+                          onClick={onClick}
+                          options={books}
+                          type="book"
+                          onDelete={onDelete}
+                        />
+                      </Item>
+                    )}
+                  </>
+                  {b !== '' && (
+                    <Item>
+                      <BookInfo number={i} />
+                    </Item>
+                  )}
+                </div>
+              ))}
+            <Item>
+              {issue.memberState > 1 ? (
+                <MoreButton text="Issue more" onClick={() => dispatch(addBookOption())} />
+              ) : (
+                <p>Member has reached maximum borrowed book</p>
+              )}
+            </Item>
+          </GridContainer>
+          {/* <Container>
             <SearchContainer>
               {issue.memberState > 0 &&
                 issue.bookIds.map((b, i) => (
@@ -60,7 +93,7 @@ export const Book: FC = () => {
                     {b !== '' && (
                       <>
                         {' '}
-                        <BookInfo onDelete={onDelete} number={i} />{' '}
+                        <BookInfo number={i} />{' '}
                       </>
                     )}
                   </React.Fragment>
@@ -71,7 +104,7 @@ export const Book: FC = () => {
                 <p>Member has reached maximum borrowed book</p>
               )}
             </SearchContainer>
-          </Container>
+          </Container> */}
         </StepContent>
       </InfoContainer>
       <br />
