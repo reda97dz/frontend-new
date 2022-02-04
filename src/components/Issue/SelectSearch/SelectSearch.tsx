@@ -10,14 +10,14 @@ interface SelectSearchBookProps {
   type: 'book';
   number: number;
   options: Book[];
-  onClick: Function;
-  onDelete: Function;
+  onClick: any;
+  onDelete: any;
 }
 
 interface SelectSearchMemberProps {
   type: 'member';
   options: Member[];
-  onClick: Function;
+  onClick: any;
 }
 
 type SelectSearchProps = SelectSearchBookProps | SelectSearchMemberProps;
@@ -26,15 +26,18 @@ export const SelectSearch: FC<SelectSearchProps> = (props) => {
   const [open, setOpen] = useState(false);
   const member = useAppSelector(selectMember);
   const issue = useAppSelector(selectIssue);
-  const { onClick, type, options, number } = props;
+  const { onClick, type } = props;
+
   const onClickMember = (m: Member) => {
     onClick(m);
     setOpen(false);
   };
+
   const onClickBook = (book: Book, n: number) => {
     onClick(book.id, n);
     setOpen(false);
   };
+
   const onDeleteBook = (n: number) => {
     if (type === 'book') {
       const { onDelete } = props;
@@ -42,9 +45,10 @@ export const SelectSearch: FC<SelectSearchProps> = (props) => {
     }
   };
 
-  return (
-    <div>
-      {type === 'book' ? (
+  function renderSelectSearch() {
+    if (type === 'book') {
+      const { number, options } = props;
+      return (
         <>
           <SelectSearchContainer onClick={() => setOpen(!open)}>
             <input type="text" value={issue.bookIds[number] || 'select a book'} />
@@ -53,8 +57,8 @@ export const SelectSearch: FC<SelectSearchProps> = (props) => {
             <ClickAwayListener onClickAway={() => setOpen(false)}>
               <Options>
                 {options
-                  .filter((b) => !issue.bookIds.includes(b.id))
-                  .map((option) => (
+                  .filter((b: { id: string }) => !issue.bookIds.includes(b.id))
+                  .map((option: Book) => (
                     <Option key={option.id} onClick={() => onClickBook(option, number)}>
                       {option.title}
                     </Option>
@@ -68,28 +72,32 @@ export const SelectSearch: FC<SelectSearchProps> = (props) => {
             </button>
           )}
         </>
-      ) : (
-        <>
-          <SelectSearchContainer onClick={() => setOpen(!open)}>
-            <input type="text" value={member.lastName || 'select a member'} />
-          </SelectSearchContainer>
-          {open && (
-            <ClickAwayListener onClickAway={() => setOpen(false)}>
-              <Options>
-                {options.map((option) => (
-                  <Option
-                    key={option.id}
-                    onClick={() => onClickMember(option)}
-                    selected={option.membershipNumber === member.membershipNumber}
-                  >
-                    {option.firstName} {option.lastName}
-                  </Option>
-                ))}
-              </Options>
-            </ClickAwayListener>
-          )}
-        </>
-      )}
-    </div>
-  );
+      );
+    }
+    const { options } = props;
+    return (
+      <>
+        <SelectSearchContainer onClick={() => setOpen(!open)}>
+          <input type="text" value={member.lastName || 'select a member'} />
+        </SelectSearchContainer>
+        {open && (
+          <ClickAwayListener onClickAway={() => setOpen(false)}>
+            <Options>
+              {options.map((option: Member) => (
+                <Option
+                  key={option.id}
+                  onClick={() => onClickMember(option)}
+                  selected={option.membershipNumber === member.membershipNumber}
+                >
+                  {option.firstName} {option.lastName}
+                </Option>
+              ))}
+            </Options>
+          </ClickAwayListener>
+        )}
+      </>
+    );
+  }
+
+  return <div>{renderSelectSearch()}</div>;
 };
