@@ -10,18 +10,23 @@ interface SelectSearchBookProps {
   type: 'book';
   number: number;
   options: Book[];
-  onClick: any;
-  onDelete: any;
+  onClick: Function;
+  onDelete: Function;
 }
 
 interface SelectSearchMemberProps {
   type: 'member';
   options: Member[];
-  onClick: any;
+  onClick: Function;
 }
 
 type SelectSearchProps = SelectSearchBookProps | SelectSearchMemberProps;
 
+/**
+ * It renders the select search component
+ * @param props - SelectSearchProps
+ * @returns A function that returns a JSX element.
+ */
 export const SelectSearch: FC<SelectSearchProps> = (props) => {
   const [open, setOpen] = useState(false);
   const member = useAppSelector(selectMember);
@@ -33,11 +38,21 @@ export const SelectSearch: FC<SelectSearchProps> = (props) => {
     setOpen(false);
   };
 
+  /**
+   * It calls the onClick function with the book id and the number of the book.
+   * @param {Book} book - The book that was clicked.
+   * @param {number} n - number
+   */
   const onClickBook = (book: Book, n: number) => {
     onClick(book.id, n);
     setOpen(false);
   };
 
+  /**
+   * It calls the onDelete function passed in as a prop, and passes in the number of the book to be
+   * deleted.
+   * @param {number} n - The number of the book to delete.
+   */
   const onDeleteBook = (n: number) => {
     if (type === 'book') {
       const { onDelete } = props;
@@ -45,6 +60,10 @@ export const SelectSearch: FC<SelectSearchProps> = (props) => {
     }
   };
 
+  /**
+   * It renders the select search component.
+   * @returns A function that returns a JSX element.
+   */
   function renderSelectSearch() {
     if (type === 'book') {
       const { number, options } = props;
@@ -68,7 +87,7 @@ export const SelectSearch: FC<SelectSearchProps> = (props) => {
           )}
           {(number !== 0 || issue.bookIds.length > 1) && (
             <button type="button" onClick={() => onDeleteBook(number)}>
-              remove
+              cancel
             </button>
           )}
         </>

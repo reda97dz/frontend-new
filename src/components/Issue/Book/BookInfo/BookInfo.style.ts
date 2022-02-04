@@ -67,9 +67,9 @@ export const MenuContent = styled.ul`
     margin-top: 0.1em;
   }
   > :nth-child(2) {
-    color: red;
+    color: #ff2e00;
     :hover {
-      background-color: red;
+      background-color: #ff2e00;
     }
   }
 `;

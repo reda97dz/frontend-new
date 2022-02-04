@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+export const MenuContainer = styled.div`
+  position: relative;
+`;
+
 export const Container = styled.div`
   width: fit-content;
   display: flex;
@@ -18,10 +22,10 @@ export const Container = styled.div`
 `;
 
 export const Menu = styled.ul`
-  position: fixed;
-  top: 2.7em;
-  right: 0.6em;
-  width: fit-content;
+  position: absolute;
+  top: 2.8em;
+  right: 1em;
+  width: 7em;
   max-height: 15em;
   background-color: #294c60;
   border-radius: 2px;
@@ -29,8 +33,12 @@ export const Menu = styled.ul`
   > li + li {
     margin-top: 0.5em;
   }
-  > :last-child:hover {
-    color: red;
+  > :last-child {
+    color: #ff2e00;
+    :hover {
+      background-color: #ff2e00;
+      color: #eaeaea;
+    }
   }
 `;
 
@@ -39,8 +47,10 @@ export const MenuItem = styled.li`
   padding: 0 1em;
   color: #eaeaea;
   cursor: pointer;
+  border-radius: 2px;
   font-weight: bold;
   :hover {
-    color: #44ce42;
+    color: #294c60;
+    background-color: #eaeaea;
   }
 `;

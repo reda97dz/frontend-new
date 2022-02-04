@@ -1,10 +1,4 @@
-import {
-  faBook,
-  faEdit,
-  faEllipsisH,
-  faEllipsisV,
-  faMinusCircle,
-} from '@fortawesome/free-solid-svg-icons';
+import { faBook, faEllipsisH } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { clearBook, removeBook, selectIssue } from 'app/issueSlice';
@@ -27,7 +21,7 @@ interface Info {
   number: number;
 }
 
-const BookMenu: FC<Info> = (props) => {
+export const BookMenu: FC<Info> = (props) => {
   const issue = useAppSelector(selectIssue);
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
