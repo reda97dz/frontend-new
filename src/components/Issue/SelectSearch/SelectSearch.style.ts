@@ -51,7 +51,7 @@ export const Options = styled.ul`
   border: solid 1px #294c60;
 `;
 
-export const Option = styled.li`
+export const Option = styled.li<{ selected?: boolean }>`
   list-style: none;
   cursor: pointer;
   margin: 0.2em;
@@ -59,9 +59,11 @@ export const Option = styled.li`
   padding: 0.2em 0.5em;
   font-weight: bold;
   :hover {
-    background-color: #eaeaea;
+    background-color: #294c60;
+    color: #dcdfe5;
   }
   background-color: #fff;
-  font-family: 'Cairo';
   color: black;
+  ${(props) => props.selected && 'background-color: #294c60; color: #dcdfe5'};
+  font-family: 'Cairo';
 `;

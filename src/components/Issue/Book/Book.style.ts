@@ -17,7 +17,7 @@ export const GridContainer = styled.div`
   grid-auto-flow: dense;
 `;
 export const Item = styled.div`
-  min-height: 10em;
+  min-height: 8.5em;
   display: flex;
   flex-direction: column;
 `;

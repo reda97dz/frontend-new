@@ -1,17 +1,19 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const Tile = styled.div`
   border-radius: 6px;
   background-color: #294c60;
+  padding: 0.5em 0.8em;
+`;
+
+export const Container = styled.div`
   display: flex;
-  width: 100%;
   flex-direction: column;
   flex: 1;
 `;
 
 export const Content = styled.div`
   flex: 1;
-  padding: 0 0.5em;
   > p {
     margin: 0;
     color: #adb6c4;
@@ -19,7 +21,6 @@ export const Content = styled.div`
 `;
 
 export const Header = styled.div`
-  padding: 0.2em 0.4em;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -40,7 +41,6 @@ export const Title = styled(Header)`
 `;
 
 export const Footer = styled.div`
-  padding: 0.2em 0.5em;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -62,9 +62,9 @@ export const MenuContent = styled.ul`
   right: 0;
   background-color: #dcdfe5;
   border-radius: 4px;
-  padding: 0.5em;
+  padding: 0.3em;
   > li + li {
-    margin-top: 0.5em;
+    margin-top: 0.1em;
   }
   > :nth-child(2) {
     color: red;

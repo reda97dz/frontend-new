@@ -77,7 +77,7 @@ export const SelectSearch: FC<SelectSearchProps> = (props) => {
             <ClickAwayListener onClickAway={() => setOpen(false)}>
               <Options>
                 {options.map((option) => (
-                  <Option key={option.id} onClick={() => onClickMember(option)}>
+                  <Option key={option.id} onClick={() => onClickMember(option)} selected={option.membershipNumber === member.membershipNumber}>
                     {option.firstName} {option.lastName}
                   </Option>
                 ))}

@@ -20,6 +20,7 @@ import {
   MenuContent,
   MenuItem,
   Title,
+  Tile,
 } from './BookInfo.style';
 
 interface Info {
@@ -33,7 +34,7 @@ const BookMenu: FC<Info> = (props) => {
   const { number } = props;
   return (
     <MenuContainer>
-      <FontAwesomeIcon icon={faEllipsisH} onClick={() => setOpen(!open)} color="#03a10a" />
+      <FontAwesomeIcon icon={faEllipsisH} onClick={() => setOpen(!open)} color="#dcdfe5" />
       {open && (
         <ClickAwayListener onClickAway={() => setOpen(false)}>
           <MenuContent>
@@ -51,26 +52,28 @@ const BookMenu: FC<Info> = (props) => {
 export const BookInfo: FC<Info> = (props) => {
   const { number } = props;
   return (
-    <Container>
-      <Header>
-        <Title>
-          <Icon>
-            <FontAwesomeIcon icon={faBook} color="#fff" />
-          </Icon>
-          <p>Title right here</p>
-        </Title>
-        <div>
-          <BookMenu number={number} />
-        </div>
-      </Header>
-      <Content>
-        <p>Author</p>
-        <p>Category</p>
-      </Content>
-      <Footer>
-        <p>ref</p>
-        <p>ref</p>
-      </Footer>
-    </Container>
+    <Tile>
+      <Container>
+        <Header>
+          <Title>
+            <Icon>
+              <FontAwesomeIcon icon={faBook} color="#fff" />
+            </Icon>
+            <p>Title right here</p>
+          </Title>
+          <div>
+            <BookMenu number={number} />
+          </div>
+        </Header>
+        <Content>
+          <p>Author</p>
+          <p>Category</p>
+        </Content>
+        <Footer>
+          <p>ref</p>
+          <p>ref</p>
+        </Footer>
+      </Container>
+    </Tile>
   );
 };
