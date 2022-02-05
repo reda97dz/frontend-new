@@ -1,7 +1,6 @@
 import { FC, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { nextStep, previousStep, selectIssue, resetIssue } from 'app/issueSlice';
-import { Summary } from 'components/Summary';
 import { resetMember } from 'app/memberSlice';
 import Button from 'components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,6 +10,7 @@ import { Container, Content, ContentContainer, Header, Icon, ModalBackdrop } fro
 import { Stepper } from './Stepper';
 import { Book } from './Book';
 import { Member } from './Member';
+import { Summary } from './Summary';
 
 interface ProceedButtonProps {
   [x: string]: any;

@@ -1,5 +1,19 @@
 import styled from 'styled-components';
 
+export const Container = styled.div`
+  > svg {
+    margin-left: 0.5em;
+    cursor: pointer;
+    :active {
+      transform: scale(0.9);
+    }
+    color: #294c60;
+    :hover {
+      color: #ff2e00;
+    }
+  }
+`;
+
 export const SelectSearchContainer = styled.div`
   display: inline-block;
   position: relative;

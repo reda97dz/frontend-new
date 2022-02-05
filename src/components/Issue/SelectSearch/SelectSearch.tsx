@@ -4,7 +4,9 @@ import { FC, useState } from 'react';
 import { Book, Member } from 'types';
 import { selectIssue } from 'app/issueSlice';
 import ClickAwayListener from 'react-click-away-listener';
-import { Option, Options, SelectSearchContainer } from './SelectSearch.style';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { Container, Option, Options, SelectSearchContainer } from './SelectSearch.style';
 
 interface SelectSearchBookProps {
   type: 'book';
@@ -68,7 +70,7 @@ export const SelectSearch: FC<SelectSearchProps> = (props) => {
     if (type === 'book') {
       const { number, options } = props;
       return (
-        <>
+        <Container>
           <SelectSearchContainer onClick={() => setOpen(!open)}>
             <input type="text" value={issue.bookIds[number] || 'select a book'} />
           </SelectSearchContainer>
@@ -86,11 +88,9 @@ export const SelectSearch: FC<SelectSearchProps> = (props) => {
             </ClickAwayListener>
           )}
           {(number !== 0 || issue.bookIds.length > 1) && (
-            <button type="button" onClick={() => onDeleteBook(number)}>
-              cancel
-            </button>
+            <FontAwesomeIcon icon={faTrash} onClick={() => onDeleteBook(number)} />
           )}
-        </>
+        </Container>
       );
     }
     const { options } = props;

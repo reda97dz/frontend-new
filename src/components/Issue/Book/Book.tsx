@@ -47,7 +47,7 @@ export const Book: FC = () => {
                   <>
                     {issue.bookIds[i] === '' && (
                       <Item key={Math.random()}>
-                        <p>Search for a book</p>
+                        <p>Search for a book #{i + 1} </p>
                         <SelectSearch
                           number={i}
                           onClick={onClick}
@@ -69,46 +69,12 @@ export const Book: FC = () => {
               {issue.memberState > 1 ? (
                 <MoreButton text="Issue more" onClick={() => dispatch(addBookOption())} />
               ) : (
-                <p>Member has reached maximum borrowed book</p>
+                <p>Maximum reached</p>
               )}
             </Item>
           </GridContainer>
-          {/* <Container>
-            <SearchContainer>
-              {issue.memberState > 0 &&
-                issue.bookIds.map((b, i) => (
-                  <React.Fragment key={Math.random()}>
-                    {issue.bookIds[i] === '' && (
-                      <div>
-                        <p>Search for a book</p>
-                        <SelectSearch
-                          number={i}
-                          onClick={onClick}
-                          options={books}
-                          type="book"
-                          onDelete={onDelete}
-                        />
-                      </div>
-                    )}
-                    {b !== '' && (
-                      <>
-                        {' '}
-                        <BookInfo number={i} />{' '}
-                      </>
-                    )}
-                  </React.Fragment>
-                ))}
-              {issue.memberState > 1 ? (
-                <MoreButton text="Issue more" onClick={() => dispatch(addBookOption())} />
-              ) : (
-                <p>Member has reached maximum borrowed book</p>
-              )}
-            </SearchContainer>
-          </Container> */}
         </StepContent>
       </InfoContainer>
-      <br />
-      <br />
     </div>
   );
 };

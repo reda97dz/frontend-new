@@ -20,6 +20,9 @@ export const Item = styled.div`
   min-height: 8.5em;
   display: flex;
   flex-direction: column;
+  > p {
+    margin: 0;
+  }
 `;
 
 export const MoreButton = styled(Button)`
