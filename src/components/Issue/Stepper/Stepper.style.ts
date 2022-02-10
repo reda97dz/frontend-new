@@ -3,10 +3,13 @@ import styled from 'styled-components';
 export const Container = styled.div`
   background-color: #294c60;
   padding: 1em;
-  border-radius: 4px;
+  border-radius: 6px;
   color: #eaeaea;
   > * + * {
     margin-top: 1em;
+  }
+  @media (max-width: 60em) {
+    display: none;
   }
 `;
 

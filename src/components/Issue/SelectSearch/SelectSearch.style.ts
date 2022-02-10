@@ -34,7 +34,7 @@ export const SelectSearchContainer = styled.div`
       border-radius: 0;
       border-top-left-radius: 4px;
       border-top-right-radius: 4px;
-      box-shadow: 1px 0 1px rgba(0, 0, 0, 0.5);
+      /* box-shadow: 1px 0 1px rgba(0, 0, 0, 0.5); */
     }
     ::placeholder {
       color: black;
@@ -44,11 +44,11 @@ export const SelectSearchContainer = styled.div`
 
   ::after {
     content: '';
+    pointer-events: none;
     right: 0.7em;
     top: 43%;
     position: absolute;
     transform: translateY(-20%) rotate(45deg);
-    cursor: pointer;
     width: 4px;
     height: 4px;
     border-radius: 1px;
@@ -70,7 +70,7 @@ export const Options = styled.ul`
   z-index: 1531;
   /* border: solid 1px #294c60; */
   border-top: 0;
-  box-shadow: 1px 0 1px rgba(0, 0, 0, 0.5);
+  /* box-shadow: 1px 0 1px rgba(0, 0, 0, 0.5); */
 `;
 
 export const Option = styled.li<{ selected?: boolean }>`

@@ -12,6 +12,12 @@ export const Container = styled.div`
   border-radius: 4px;
   display: flex;
   flex-direction: column;
+  @media (max-width: 40em) {
+    left: 2em;
+    right: 2em;
+    top: 5em;
+    bottom: 2em;
+  }
 `;
 
 export const Header = styled.div`
@@ -26,6 +32,9 @@ export const ContentContainer = styled.div`
   flex-direction: row;
   > * + * {
     margin-left: 1em;
+    @media (max-width: 60em) {
+      margin-left: 0;
+    }
   }
   > :first-child {
     position: relative;
@@ -45,7 +54,7 @@ export const ModalBackdrop = styled.div`
 export const Content = styled.div`
   flex: 1;
   background-color: #adb6c4;
-  border-radius: 4px;
+  border-radius: 6px;
   display: flex;
   flex-direction: column;
 `;
@@ -66,6 +75,9 @@ export const StepContent = styled.div`
   flex: 1;
   overflow-y: scroll;
   position: absolute;
+  @media (max-width: 60em) {
+    left: 1em;
+  }
 `;
 
 export const StepTitle = styled.div`

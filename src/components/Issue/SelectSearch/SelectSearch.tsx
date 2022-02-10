@@ -71,21 +71,19 @@ export const SelectSearch: FC<SelectSearchProps> = (props) => {
       const { number, options } = props;
       return (
         <Container>
-          <SelectSearchContainer onClick={() => setOpen(!open)}>
+          <SelectSearchContainer onClick={() => setOpen(true)}>
             <input type="text" value={issue.bookIds[number] || 'select a book'} />
           </SelectSearchContainer>
           {open && (
-            <ClickAwayListener onClickAway={() => setOpen(false)}>
-              <Options>
-                {options
-                  .filter((b: { id: string }) => !issue.bookIds.includes(b.id))
-                  .map((option: Book) => (
-                    <Option key={option.id} onClick={() => onClickBook(option, number)}>
-                      {option.title}
-                    </Option>
-                  ))}
-              </Options>
-            </ClickAwayListener>
+            <Options>
+              {options
+                .filter((b: { id: string }) => !issue.bookIds.includes(b.id))
+                .map((option: Book) => (
+                  <Option key={option.id} onClick={() => onClickBook(option, number)}>
+                    {option.title}
+                  </Option>
+                ))}
+            </Options>
           )}
           {(number !== 0 || issue.bookIds.length > 1) && (
             <FontAwesomeIcon icon={faTrash} onClick={() => onDeleteBook(number)} />
@@ -96,27 +94,29 @@ export const SelectSearch: FC<SelectSearchProps> = (props) => {
     const { options } = props;
     return (
       <>
-        <SelectSearchContainer onClick={() => setOpen(!open)}>
+        <SelectSearchContainer onClick={() => setOpen(true)}>
           <input type="text" value={member.lastName || 'select a member'} />
         </SelectSearchContainer>
         {open && (
-          <ClickAwayListener onClickAway={() => setOpen(false)}>
-            <Options>
-              {options.map((option: Member) => (
-                <Option
-                  key={option.id}
-                  onClick={() => onClickMember(option)}
-                  selected={option.membershipNumber === member.membershipNumber}
-                >
-                  {option.firstName} {option.lastName}
-                </Option>
-              ))}
-            </Options>
-          </ClickAwayListener>
+          <Options>
+            {options.map((option: Member) => (
+              <Option
+                key={option.id}
+                onClick={() => onClickMember(option)}
+                selected={option.membershipNumber === member.membershipNumber}
+              >
+                {option.firstName} {option.lastName}
+              </Option>
+            ))}
+          </Options>
         )}
       </>
     );
   }
 
-  return <div>{renderSelectSearch()}</div>;
+  return (
+    <ClickAwayListener onClickAway={() => setOpen(false)}>
+      <div>{renderSelectSearch()}</div>
+    </ClickAwayListener>
+  );
 };

@@ -10,6 +10,10 @@ export const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media (max-width: 40em) {
+    width: 100%;
+    margin-left: 0;
+  }
 `;
 
 export const Toggle = styled.button`

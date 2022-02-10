@@ -18,6 +18,9 @@ export const Container = styled.div`
   > p {
     color: #001b2e;
     font-weight: bold;
+    @media (max-width: 40em) {
+      display: none;
+    }
   }
 `;
 
