@@ -20,7 +20,7 @@ try {
 
 module.exports = {
   mode: 'development',
-  devServer: { hot: true },
+  devServer: { hot: true, host: '0.0.0.0' },
   devtool: 'cheap-module-source-map',
   stats: 'minimal',
   // incase failures for webpack react-refresh add HotModuleReplacementPlugin
