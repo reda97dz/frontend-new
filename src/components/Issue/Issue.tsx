@@ -72,24 +72,22 @@ export const Issue: FC = () => {
     }
   };
   return (
-    <div>
+    <>
       <Button text="Issue a book" onClick={toggleIssue} />
       {open && (
-        <div>
+        <>
           <ModalBackdrop onClick={toggleIssue} />
-          <ClickAwayListener onClickAway={toggleIssue}>
-            <Container>
-              <Header>
-                <h3>Issuing a book</h3>
-              </Header>
-              <ContentContainer>
-                <Stepper />
-                <Content>{renderSwitch(issue.step)}</Content>
-              </ContentContainer>
-            </Container>
-          </ClickAwayListener>
-        </div>
+          <Container>
+            <Header>
+              <h3>Issuing a book</h3>
+            </Header>
+            <ContentContainer>
+              <Stepper />
+              <Content>{renderSwitch(issue.step)}</Content>
+            </ContentContainer>
+          </Container>
+        </>
       )}
-    </div>
+    </>
   );
 };

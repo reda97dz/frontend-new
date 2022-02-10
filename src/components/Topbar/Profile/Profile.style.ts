@@ -31,17 +31,21 @@ export const Menu = styled.ul`
   width: 7em;
   max-height: 15em;
   background-color: #294c60;
-  border-radius: 2px;
+  border-radius: 4px;
   padding: 0.5em;
   > li + li {
     margin-top: 0.5em;
   }
   > :last-child {
-    color: #ff2e00;
+    /* color: #ff2e00; */
+    background-color: #ff2e00;
     :hover {
-      background-color: #ff2e00;
-      color: #eaeaea;
+      background-color: #eaeaea;
+      color: #ff2e00;
     }
+  }
+  @media (max-width: 40em) {
+    top: 1.85em;
   }
 `;
 

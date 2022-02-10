@@ -34,7 +34,14 @@ export const BookMenu: FC<Info> = (props) => {
           <MenuContent>
             <MenuItem onClick={() => dispatch(clearBook(number))}>Edit</MenuItem>
             {(number !== 0 || issue.bookIds.length > 1) && (
-              <MenuItem onClick={() => dispatch(removeBook(number))}>Remove</MenuItem>
+              <MenuItem
+                onClick={() => {
+                  dispatch(removeBook(number));
+                  setOpen(false);
+                }}
+              >
+                Remove
+              </MenuItem>
             )}
           </MenuContent>
         </ClickAwayListener>
