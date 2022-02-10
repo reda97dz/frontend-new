@@ -2,11 +2,11 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   background-color: #294c60;
-  padding: 1em;
+  padding: 0.5em;
   border-radius: 6px;
   color: #eaeaea;
   > * + * {
-    margin-top: 1em;
+    margin-top: 0.5em;
   }
   @media (max-width: 60em) {
     display: none;

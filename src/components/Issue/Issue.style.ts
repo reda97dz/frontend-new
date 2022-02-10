@@ -9,7 +9,7 @@ export const Container = styled.div`
   bottom: 3em;
   background-color: white;
   padding: 1em;
-  border-radius: 4px;
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
   @media (max-width: 40em) {
@@ -31,7 +31,7 @@ export const ContentContainer = styled.div`
   display: flex;
   flex-direction: row;
   > * + * {
-    margin-left: 1em;
+    margin-left: 0.7em;
     @media (max-width: 60em) {
       margin-left: 0;
     }
@@ -68,7 +68,7 @@ export const InfoContainer = styled.div`
 
 export const StepContent = styled.div`
   top: 7em;
-  left: 14em;
+  left: 13em;
   right: 1em;
   bottom: 1em;
   padding: 1em;

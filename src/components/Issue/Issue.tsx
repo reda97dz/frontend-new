@@ -11,6 +11,7 @@ import { Stepper } from './Stepper';
 import { Book } from './Book';
 import { Member } from './Member';
 import { Summary } from './Summary';
+import { Done } from './Done';
 
 interface ProceedButtonProps {
   [x: string]: any;
@@ -62,11 +63,11 @@ export const Issue: FC = () => {
       default:
         return (
           <>
-            Book issued. Done!{' '}
-            {setTimeout(() => {
+            <Done />
+            {/* {setTimeout(() => {
               dispatch(resetIssue());
               dispatch(resetMember());
-            }, 3000)}{' '}
+            }, 3000)}{' '} */}
           </>
         );
     }
