@@ -5,6 +5,7 @@ import { clearBook, removeBook, selectIssue } from 'app/issueSlice';
 import { Icon } from 'components/Issue/Stepper/Stepper.style';
 import { FC, useState } from 'react';
 import ClickAwayListener from 'react-click-away-listener';
+import { Book } from 'types';
 import {
   Container,
   Content,
@@ -17,18 +18,14 @@ import {
   Tile,
 } from './BookInfo.style';
 
-interface Info {
-  number: number;
-}
-
-export const BookMenu: FC<Info> = (props) => {
+export const BookMenu: FC<{ number: number }> = (props) => {
   const issue = useAppSelector(selectIssue);
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
   const { number } = props;
   return (
     <MenuContainer>
-      <FontAwesomeIcon icon={faEllipsisH} onClick={() => setOpen(!open)} color="#dcdfe5" />
+      <FontAwesomeIcon icon={faEllipsisH} onClick={() => setOpen(!open)} color="#03a10a" />
       {open && (
         <ClickAwayListener onClickAway={() => setOpen(false)}>
           <MenuContent>
@@ -50,29 +47,34 @@ export const BookMenu: FC<Info> = (props) => {
   );
 };
 
+interface Info {
+  number: number;
+  book: Book;
+}
+
 export const BookInfo: FC<Info> = (props) => {
-  const { number } = props;
+  const { number, book } = props;
   return (
     <Tile>
       <Container>
         <Header>
           <Title>
             <Icon>
-              <FontAwesomeIcon icon={faBook} color="#fff" />
+              <FontAwesomeIcon icon={faBook} color="#dcdfe5" />
             </Icon>
-            <p>Title right here</p>
+            <p> {book.title} </p>
           </Title>
           <div>
             <BookMenu number={number} />
           </div>
         </Header>
         <Content>
-          <p>Author</p>
-          <p>Category</p>
+          <p>{book.author}</p>
+          <p>{book.year}</p>
         </Content>
         <Footer>
-          <p>ref</p>
-          <p>ref</p>
+          <p>{book.bar_code}</p>
+          <p>{book.isbn}</p>
         </Footer>
       </Container>
     </Tile>

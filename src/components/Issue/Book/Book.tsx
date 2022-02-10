@@ -1,12 +1,12 @@
 import { fetchBooks, selectBooks } from 'app/booksSlice';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { addBookOption, removeBook, selectIssue, setBook } from 'app/issueSlice';
-import React, { FC, useEffect } from 'react';
+import { FC, useEffect } from 'react';
+import { Book as BookType } from 'types';
 import { BackButton, ProceedButton } from '..';
 import { InfoContainer, StepContent, StepTitle, Title } from '../Issue.style';
-import { SearchContainer } from '../Member/Member.style';
 import { SelectSearch } from '../SelectSearch';
-import { Container, GridContainer, Item, MoreButton } from './Book.style';
+import { GridContainer, Item, MoreButton } from './Book.style';
 import { BookInfo } from './BookInfo/BookInfo';
 
 export const Book: FC = () => {
@@ -22,8 +22,8 @@ export const Book: FC = () => {
     dispatch(fetchBooks());
   }
 
-  const onClick = (bookId: string, index: number) => {
-    dispatch(setBook({ book: bookId, number: index }));
+  const onClick = (book: BookType, index: number) => {
+    dispatch(setBook({ book: book.id.toString(), number: index }));
   };
 
   const onDelete = (index: number) => {
@@ -60,7 +60,7 @@ export const Book: FC = () => {
                   </>
                   {b !== '' && (
                     <Item>
-                      <BookInfo number={i} />
+                      <BookInfo number={i} book={books.find((book) => book.id === Number(b))} />
                     </Item>
                   )}
                 </div>

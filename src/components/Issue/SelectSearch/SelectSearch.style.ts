@@ -21,7 +21,7 @@ export const SelectSearchContainer = styled.div`
     cursor: pointer;
     border-radius: 4px;
     text-align: left;
-    padding: 0.2em 0.7em;
+    padding: 0.2em 2em 0.2em 0.4em;
     font-family: 'Cairo';
     background-color: #dcdfe5;
     border: 0;
@@ -58,7 +58,7 @@ export const SelectSearchContainer = styled.div`
 `;
 
 export const Options = styled.ul`
-  width: 12.25em;
+  width: 13.05em;
   position: absolute;
   padding: 0;
   max-height: 12em;
@@ -77,8 +77,9 @@ export const Option = styled.li<{ selected?: boolean }>`
   list-style: none;
   cursor: pointer;
   margin: 0.2em;
+  line-height: 1em;
   border-radius: 2px;
-  padding: 0.1em 0.5em;
+  padding: 0.7em 0.5em;
   font-weight: bold;
   :hover {
     background-color: #dcdfe5;
@@ -88,4 +89,8 @@ export const Option = styled.li<{ selected?: boolean }>`
   color: #294c60;
   ${(props) => props.selected && 'background-color: #dcdfe5'};
   font-family: 'Cairo';
+
+  span {
+    color: #03a10a;
+  }
 `;

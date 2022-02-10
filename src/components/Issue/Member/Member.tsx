@@ -4,7 +4,7 @@ import { resetIssue, setMemberState } from 'app/issueSlice';
 import { fetchMemberById, selectMember } from 'app/memberSlice';
 import { FC, useEffect } from 'react';
 import { notEmpty } from 'utils/misc';
-import { Member as MemberType } from 'types';
+import { MemberIssue } from 'types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faUser } from '@fortawesome/free-solid-svg-icons';
 import { SelectSearch } from '../SelectSearch';
@@ -26,10 +26,10 @@ export const Member: FC = () => {
     dispatch(fetchMembers());
   }
 
-  const onClick = (m: MemberType) => {
+  const onClick = (m: MemberIssue) => {
     dispatch(resetIssue());
     dispatch(fetchMemberById(Number(m.id)));
-    dispatch(setMemberState(3 - m.active.length));
+    dispatch(setMemberState(3 - m.Issues.length));
   };
 
   return (
@@ -59,11 +59,11 @@ export const Member: FC = () => {
                     </Logo>
                     <p>
                       {' '}
-                      {member.firstName} {member.lastName}{' '}
+                      {member.first_name} {member.last_name}{' '}
                     </p>
                   </Header>
-                  <p> {member.membershipNumber} </p>
-                  <p> {member.active.length} books currently borrowed. </p>
+                  <p> {member.membership_number} </p>
+                  <p> {member.Issues.length} books currently borrowed. </p>
                 </>
               </DisplayContainer>
             )}

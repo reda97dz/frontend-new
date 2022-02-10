@@ -1,11 +1,12 @@
 import { selectMember } from 'app/memberSlice';
 import { useAppSelector } from 'app/hooks';
 import { FC, useState } from 'react';
-import { Book, Member } from 'types';
+import { Book, MemberIssue } from 'types';
 import { selectIssue } from 'app/issueSlice';
 import ClickAwayListener from 'react-click-away-listener';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { notEmpty } from 'utils/misc';
 import { Container, Option, Options, SelectSearchContainer } from './SelectSearch.style';
 
 interface SelectSearchBookProps {
@@ -18,7 +19,7 @@ interface SelectSearchBookProps {
 
 interface SelectSearchMemberProps {
   type: 'member';
-  options: Member[];
+  options: MemberIssue[];
   onClick: Function;
 }
 
@@ -35,7 +36,7 @@ export const SelectSearch: FC<SelectSearchProps> = (props) => {
   const issue = useAppSelector(selectIssue);
   const { onClick, type } = props;
 
-  const onClickMember = (m: Member) => {
+  const onClickMember = (m: MemberIssue) => {
     onClick(m);
     setOpen(false);
   };
@@ -46,7 +47,7 @@ export const SelectSearch: FC<SelectSearchProps> = (props) => {
    * @param {number} n - number
    */
   const onClickBook = (book: Book, n: number) => {
-    onClick(book.id, n);
+    onClick(book, n);
     setOpen(false);
   };
 
@@ -77,7 +78,8 @@ export const SelectSearch: FC<SelectSearchProps> = (props) => {
           {open && (
             <Options>
               {options
-                .filter((b: { id: string }) => !issue.bookIds.includes(b.id))
+                .filter((b: Book) => b.Category.name !== 'REFERENCE')
+                .filter((b: Book) => !issue.bookIds.includes(b.id.toString()))
                 .map((option: Book) => (
                   <Option key={option.id} onClick={() => onClickBook(option, number)}>
                     {option.title}
@@ -95,17 +97,24 @@ export const SelectSearch: FC<SelectSearchProps> = (props) => {
     return (
       <>
         <SelectSearchContainer onClick={() => setOpen(true)}>
-          <input type="text" value={member.lastName || 'select a member'} />
+          <input
+            type="text"
+            value={
+              notEmpty(member)
+                ? `${member.membership_number} - ${member.last_name} ${member.first_name}`
+                : 'select a member'
+            }
+          />
         </SelectSearchContainer>
         {open && (
           <Options>
-            {options.map((option: Member) => (
+            {options.map((option: MemberIssue) => (
               <Option
                 key={option.id}
                 onClick={() => onClickMember(option)}
-                selected={option.membershipNumber === member.membershipNumber}
+                selected={option.membership_number === member.membership_number}
               >
-                {option.firstName} {option.lastName}
+                <span>{option.membership_number}</span> {option.first_name} {option.last_name}
               </Option>
             ))}
           </Options>

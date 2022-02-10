@@ -32,7 +32,7 @@ export const Title = styled(Header)`
   > p {
     margin-top: 0;
     margin-bottom: 0;
-    color: #03a10a;
+    color: #dcdfe5;
     font-weight: bold;
   }
   > * + * {
