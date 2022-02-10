@@ -16,21 +16,21 @@ const Profile: FC<{ name: string }> = (props) => {
   };
 
   return (
-    <MenuContainer>
-      <Container onClick={toggleOpen}>
-        <p> {name} </p>
-        <FontAwesomeIcon icon={faUserCircle} color="#001b2e" size="2x" />
-      </Container>
-      {open && (
-        <ClickAwayListener onClickAway={toggleOpen}>
+    <ClickAwayListener onClickAway={() => setOpen(false)}>
+      <MenuContainer>
+        <Container onClick={toggleOpen}>
+          <p> {name} </p>
+          <FontAwesomeIcon icon={faUserCircle} color="#001b2e" size="2x" />
+        </Container>
+        {open && (
           <Menu>
             {MenuItems.map((item) => (
               <MenuItem>{item}</MenuItem>
             ))}
           </Menu>
-        </ClickAwayListener>
-      )}
-    </MenuContainer>
+        )}
+      </MenuContainer>
+    </ClickAwayListener>
   );
 };
 

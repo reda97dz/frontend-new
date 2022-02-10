@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+export const Relative = styled.div`
+  position: relative;
+`;
+
 export const Container = styled.div`
   position: fixed;
   z-index: 2;
@@ -13,8 +17,8 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   @media (max-width: 40em) {
-    left: 2em;
-    right: 2em;
+    left: 0.5em;
+    right: 0.5em;
     top: 5em;
     bottom: 2em;
   }

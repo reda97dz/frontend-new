@@ -5,7 +5,15 @@ import Button from 'components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import ReactTooltip from 'react-tooltip';
-import { Container, Content, ContentContainer, Header, Icon, ModalBackdrop } from './Issue.style';
+import {
+  Container,
+  Content,
+  ContentContainer,
+  Header,
+  Icon,
+  ModalBackdrop,
+  Relative,
+} from './Issue.style';
 import { Stepper } from './Stepper';
 import { Book } from './Book';
 import { Member } from './Member';
@@ -66,7 +74,7 @@ export const Issue: FC = () => {
     <>
       <Button text="Issue a book" onClick={toggleIssue} />
       {open && (
-        <>
+        <Relative>
           <ModalBackdrop onClick={toggleIssue} />
           <Container>
             <Header>
@@ -79,7 +87,7 @@ export const Issue: FC = () => {
               <Content>{renderSwitch(issue.step)}</Content>
             </ContentContainer>
           </Container>
-        </>
+        </Relative>
       )}
     </>
   );
