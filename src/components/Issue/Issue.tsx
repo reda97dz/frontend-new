@@ -1,11 +1,10 @@
 import { FC, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { nextStep, previousStep, selectIssue, resetIssue } from 'app/issueSlice';
-import { resetMember } from 'app/memberSlice';
+import { nextStep, previousStep, selectIssue } from 'app/issueSlice';
 import Button from 'components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import ClickAwayListener from 'react-click-away-listener';
+import { faChevronLeft, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import ReactTooltip from 'react-tooltip';
 import { Container, Content, ContentContainer, Header, Icon, ModalBackdrop } from './Issue.style';
 import { Stepper } from './Stepper';
 import { Book } from './Book';
@@ -42,10 +41,9 @@ export const BackButton: FC = () => {
 };
 
 export const Issue: FC = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const toggleIssue = () => setOpen(!open);
   const issue = useAppSelector(selectIssue);
-  const dispatch = useAppDispatch();
   /**
    * It renders the component based on the state.
    * @param {number} s - number
@@ -61,15 +59,7 @@ export const Issue: FC = () => {
       case 3:
         return <Summary />;
       default:
-        return (
-          <>
-            <Done />
-            {/* {setTimeout(() => {
-              dispatch(resetIssue());
-              dispatch(resetMember());
-            }, 3000)}{' '} */}
-          </>
-        );
+        return <Done />;
     }
   };
   return (
@@ -80,7 +70,9 @@ export const Issue: FC = () => {
           <ModalBackdrop onClick={toggleIssue} />
           <Container>
             <Header>
-              <h3>Issuing a book</h3>
+              <h3>Issue a book</h3>
+              <FontAwesomeIcon icon={faTimesCircle} onClick={toggleIssue} data-tip="Close" />
+              <ReactTooltip place="top" type="dark" effect="solid" />
             </Header>
             <ContentContainer>
               <Stepper />

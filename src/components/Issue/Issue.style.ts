@@ -22,7 +22,23 @@ export const Container = styled.div`
 
 export const Header = styled.div`
   > h3 {
-    margin: 0;
+    margin: 0 0 0.4em;
+    cursor: pointer;
+    color: #001b2e;
+    font-weight: bolder;
+  }
+  > svg {
+    cursor: pointer;
+    color: #294c60;
+    position: absolute;
+    right: 1em;
+    top: 1em;
+    :hover {
+      color: #ff2e00;
+    }
+    :active {
+      transform: scale(0.92);
+    }
   }
 `;
 
