@@ -1,17 +1,22 @@
 import Table from 'components/Table';
-import { useAppSelector } from 'app/hooks';
-import { selectIssue } from 'app/issueSlice';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { selectIssue, setIssueDate, setReturnDate } from 'app/issueSlice';
 import { selectMember } from 'app/memberSlice';
 import { FC, useMemo } from 'react';
 import { selectBooks } from 'app/booksSlice';
 import { Book } from 'types';
 import { BackButton, ProceedButton } from '..';
 import { InfoContainer, StepContent, StepTitle, Title } from '../Issue.style';
+import { DatePickerStyle } from './Summary.style';
+import 'react-datepicker/dist/react-datepicker.css';
 
 export const Summary: FC = () => {
   const issue = useAppSelector(selectIssue);
   const member = useAppSelector(selectMember);
   const books = useAppSelector(selectBooks);
+  const dispatch = useAppDispatch();
   const columns = useMemo(
     () => [
       {
@@ -25,6 +30,12 @@ export const Summary: FC = () => {
     ],
     []
   );
+
+  const onChange = (dates) => {
+    dispatch(setIssueDate(moment(dates[0]).toDate().toString()));
+    if (dates[1] !== null) dispatch(setReturnDate(moment(dates[1]).toDate().toString()));
+  };
+
   return (
     <div>
       <InfoContainer>
@@ -46,6 +57,17 @@ export const Summary: FC = () => {
             columns={columns}
             data={books.filter((b: Book) => issue.bookIds.includes(b.id.toString()))}
           />
+          <DatePickerStyle>
+            <DatePicker
+              selected={new Date(issue.issueDate)}
+              onChange={onChange}
+              startDate={new Date(issue.issueDate)}
+              endDate={issue.returnDate === '' ? '' : new Date(issue.returnDate)}
+              minDate={moment().toDate()}
+              selectsRange
+              withPortal
+            />
+          </DatePickerStyle>
         </StepContent>
       </InfoContainer>
     </div>

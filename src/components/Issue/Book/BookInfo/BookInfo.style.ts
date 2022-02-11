@@ -33,6 +33,7 @@ export const Title = styled(Header)`
     margin-top: 0;
     margin-bottom: 0;
     color: #dcdfe5;
+    line-height: 1em;
     font-weight: bold;
   }
   > * + * {
