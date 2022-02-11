@@ -19,7 +19,7 @@ import {
   TableStyle,
 } from './Table.style';
 
-const Table = ({ columns, data, rowProps = () => ({}) }) => {
+const Table = ({ columns, data, pagination, rowProps = () => ({}) }) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -69,50 +69,52 @@ const Table = ({ columns, data, rowProps = () => ({}) }) => {
           })}
         </tbody>
       </table>
-      <Pagination>
-        <First onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          <FontAwesomeIcon icon={faAngleDoubleLeft} />
-        </First>
-        <PreviousNext onClick={() => previousPage()} disabled={!canPreviousPage}>
-          <FontAwesomeIcon icon={faAngleLeft} />
-        </PreviousNext>
-        <PageIndex>
-          Page{' '}
-          <strong>
-            {pageIndex + 1} / {pageOptions.length}
-          </strong>
-        </PageIndex>
-        <PreviousNext onClick={() => nextPage()} disabled={!canNextPage}>
-          <FontAwesomeIcon icon={faAngleRight} />
-        </PreviousNext>
-        <Last onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          <FontAwesomeIcon icon={faAngleDoubleRight} />
-        </Last>
-        <Goto>
-          Aller vers
-          <input
-            type="number"
-            defaultValue={pageIndex + 1}
+      {pagination && (
+        <Pagination>
+          <First onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+            <FontAwesomeIcon icon={faAngleDoubleLeft} />
+          </First>
+          <PreviousNext onClick={() => previousPage()} disabled={!canPreviousPage}>
+            <FontAwesomeIcon icon={faAngleLeft} />
+          </PreviousNext>
+          <PageIndex>
+            Page{' '}
+            <strong>
+              {pageIndex + 1} / {pageOptions.length}
+            </strong>
+          </PageIndex>
+          <PreviousNext onClick={() => nextPage()} disabled={!canNextPage}>
+            <FontAwesomeIcon icon={faAngleRight} />
+          </PreviousNext>
+          <Last onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+            <FontAwesomeIcon icon={faAngleDoubleRight} />
+          </Last>
+          <Goto>
+            Aller vers
+            <input
+              type="number"
+              defaultValue={pageIndex + 1}
+              onChange={(e) => {
+                const page = e.target.value ? Number(e.target.value) - 1 : 0;
+                gotoPage(page);
+              }}
+              style={{ width: '100px' }}
+            />
+          </Goto>
+          <Show
+            value={pageSize}
             onChange={(e) => {
-              const page = e.target.value ? Number(e.target.value) - 1 : 0;
-              gotoPage(page);
+              setPageSize(Number(e.target.value));
             }}
-            style={{ width: '100px' }}
-          />
-        </Goto>
-        <Show
-          value={pageSize}
-          onChange={(e) => {
-            setPageSize(Number(e.target.value));
-          }}
-        >
-          {[5, 10, 20, 30, 40, 50].map((pageSize) => (
-            <option key={pageSize} value={pageSize}>
-              Afficher {pageSize}
-            </option>
-          ))}
-        </Show>
-      </Pagination>
+          >
+            {[5, 10, 20, 30, 40, 50].map((pageSize) => (
+              <option key={pageSize} value={pageSize}>
+                Afficher {pageSize}
+              </option>
+            ))}
+          </Show>
+        </Pagination>
+      )}
     </TableStyle>
   );
 };
