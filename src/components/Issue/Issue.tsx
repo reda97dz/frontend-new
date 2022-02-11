@@ -5,6 +5,7 @@ import Button from 'components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import ReactTooltip from 'react-tooltip';
+import { selectBooks } from 'app/booksSlice';
 import {
   Container,
   Content,
@@ -52,6 +53,7 @@ export const Issue: FC = () => {
   const [open, setOpen] = useState(false);
   const toggleIssue = () => setOpen(!open);
   const issue = useAppSelector(selectIssue);
+  const books = useAppSelector(selectBooks);
   /**
    * It renders the component based on the state.
    * @param {number} s - number
@@ -67,7 +69,12 @@ export const Issue: FC = () => {
       case 3:
         return <Summary />;
       default:
-        return <Done />;
+        return (
+          <Done
+            // eslint-disable-next-line camelcase
+            books={books.filter((b) => issue.bookIds.includes(b.id.toString()))}
+          />
+        );
     }
   };
   return (

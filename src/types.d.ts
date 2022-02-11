@@ -37,11 +37,10 @@ export interface Book {
 }
 
 export interface Issue {
-  id: number;
   books: string;
   date_issued: string;
   date_due_for_return: string;
-  borrower_id: number;
+  member_id: number;
 }
 
 export interface MemberIssue {
