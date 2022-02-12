@@ -7,7 +7,9 @@ import { selectMember } from 'app/memberSlice';
 import { FC, useMemo } from 'react';
 import { selectBooks } from 'app/booksSlice';
 import { Book } from 'types';
-import { BackButton, ProceedButton } from '..';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { BackButton, IssueButton } from '..';
 import { InfoContainer, StepContent, StepTitle, Title } from '../Issue.style';
 import { DatePickerStyle } from './Summary.style';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -31,7 +33,7 @@ export const Summary: FC = () => {
     []
   );
 
-  const onChange = (dates) => {
+  const onChange = (dates: [Date | null, Date | null]) => {
     dispatch(setIssueDate(moment(dates[0]).toDate().toString()));
     if (dates[1] !== null) dispatch(setReturnDate(moment(dates[1]).toDate().toString()));
   };
@@ -44,19 +46,28 @@ export const Summary: FC = () => {
             <BackButton />
             <h3>Summary</h3>
           </Title>
-          <ProceedButton />
+          {issue.issueState === 'pending' ? (
+            <FontAwesomeIcon icon={faSpinner} className="fa-pulse" color="gainsboro" />
+          ) : (
+            <IssueButton
+              disabled={issue.issueDate === '' || issue.returnDate === ''}
+              books={books.filter((b) => issue.bookIds.includes(b.id.toString()))}
+            />
+          )}
         </StepTitle>
         <StepContent>
           Member{' '}
           <strong>
             {member.last_name} {member.first_name} ({member.membership_number})
           </strong>{' '}
-          is borrowing the following books
+          is borrowing the following book{issue.bookIds.length > 1 && 's'}
           <Table
             pagination={false}
             columns={columns}
             data={books.filter((b: Book) => issue.bookIds.includes(b.id.toString()))}
           />
+          <br />
+          Edit the date range
           <DatePickerStyle>
             <DatePicker
               selected={new Date(issue.issueDate)}

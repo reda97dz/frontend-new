@@ -1,11 +1,14 @@
+/* eslint-disable react/require-default-props */
 import { FC, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { nextStep, previousStep, selectIssue } from 'app/issueSlice';
+import { createIssue, nextStep, previousStep, selectIssue } from 'app/issueSlice';
 import Button from 'components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import ReactTooltip from 'react-tooltip';
+import { Book as BookType, Issue as IssueType } from 'types';
 import { selectBooks } from 'app/booksSlice';
+import { selectMember } from 'app/memberSlice';
 import {
   Container,
   Content,
@@ -24,7 +27,11 @@ import { Done } from './Done';
 interface ProceedButtonProps {
   [x: string]: any;
 }
-/* eslint-disable react/require-default-props */
+
+interface IssueButtonProps extends ProceedButtonProps {
+  books: BookType[];
+}
+
 /**
  * It renders a button that will dispatch an action to the store to move to the next step.
  * @param props - any
@@ -33,6 +40,28 @@ interface ProceedButtonProps {
 export const ProceedButton: FC<ProceedButtonProps> = (props) => {
   const dispatch = useAppDispatch();
   return <Button text="Proceed" color="#03a10a" onClick={() => dispatch(nextStep())} {...props} />;
+};
+
+export const IssueButton: FC<IssueButtonProps> = (props) => {
+  const dispatch = useAppDispatch();
+  const issue = useAppSelector(selectIssue);
+  const member = useAppSelector(selectMember);
+  const { books, ...rest } = props;
+
+  const postIssue = () => {
+    const issueList: IssueType[] = [];
+    books.forEach((book) => {
+      issueList.push({
+        books: JSON.stringify({ id: book.id, bar_code: book.bar_code, title: book.title }),
+        date_issued: issue.issueDate,
+        date_due_for_return: issue.returnDate,
+        member_id: member.id,
+      });
+    });
+    dispatch(createIssue(issueList)).then(() => dispatch(nextStep()));
+  };
+
+  return <Button text="Issue" color="#03a10a" onClick={postIssue} {...rest} />;
 };
 
 /**
@@ -69,12 +98,7 @@ export const Issue: FC = () => {
       case 3:
         return <Summary />;
       default:
-        return (
-          <Done
-            // eslint-disable-next-line camelcase
-            books={books.filter((b) => issue.bookIds.includes(b.id.toString()))}
-          />
-        );
+        return <Done />;
     }
   };
   return (

@@ -28,7 +28,7 @@ export const DatePickerStyle = styled.div`
   }
   .react-datepicker__day--disabled:hover {
     background-color: transparent;
-    color: #dcdfe5;
+    color: #adb6c4;
   }
   .react-datepicker__day--disabled,
   .react-datepicker__month-text--disabled,
@@ -48,6 +48,27 @@ export const DatePickerStyle = styled.div`
   .react-datepicker__input-container {
     input {
       cursor: pointer;
+      font-family: 'Cairo';
+      border-radius: 4px;
+      border: 1px solid #294c60;
+      text-align: center;
+      font-weight: bold;
+      background-color: transparent;
+      color: #294c60;
+      :hover {
+        background-color: #dcdfe5;
+      }
+      :focus {
+        outline: none;
+      }
+    }
+  }
+  .react-datepicker__portal {
+    left: 14em;
+    width: calc(100% - 14em);
+    @media (max-width: 40em) {
+      left: 0;
+      width: 100%;
     }
   }
 `;
