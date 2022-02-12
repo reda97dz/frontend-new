@@ -9,6 +9,7 @@ import { selectBooks } from 'app/booksSlice';
 import { Book } from 'types';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { isWeekday } from 'utils/misc';
 import { BackButton, IssueButton } from '..';
 import { InfoContainer, StepContent, StepTitle, Title } from '../Issue.style';
 import { DatePickerStyle } from './Summary.style';
@@ -75,6 +76,7 @@ export const Summary: FC = () => {
               startDate={new Date(issue.issueDate)}
               endDate={issue.returnDate === '' ? '' : new Date(issue.returnDate)}
               minDate={moment().toDate()}
+              filterDate={isWeekday}
               selectsRange
               withPortal
             />
