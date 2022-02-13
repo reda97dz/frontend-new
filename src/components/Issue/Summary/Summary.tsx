@@ -94,7 +94,7 @@ export const Summary: FC = () => {
               onChange={onChange}
               startDate={new Date(issue.issueDate)}
               endDate={issue.returnDate === '' ? null : new Date(issue.returnDate)}
-              minDate={moment().toDate()}
+              // minDate={moment().toDate()}
               filterDate={isWeekday}
               selectsRange
               withPortal
