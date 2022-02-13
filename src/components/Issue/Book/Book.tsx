@@ -13,11 +13,15 @@ import { GridContainer, Item, MoreButton } from './Book.style';
 import { BookInfo } from './BookInfo/BookInfo';
 
 /**
- * `Returns true if there are any overdue issues.`
+ * `Returns true if there are any active overdue issues.`
  */
 export const verifyOverdues = () => {
   const member = useAppSelector(selectMember);
-  return member.Issues.filter((i) => isOverdue(new Date(i.date_due_for_return))).length > 0;
+  return (
+    member.Issues.filter(
+      (i) => i.date_returned === null && isOverdue(new Date(i.date_due_for_return))
+    ).length > 0
+  );
 };
 
 export const Book: FC = () => {
@@ -49,11 +53,19 @@ export const Book: FC = () => {
   const renderMessage = () => {
     const name = `${member.first_name}  ${member.last_name} can borrow `;
     let second = '';
-    if (member.Issues.length < 2) {
+    if (member.Issues.filter((i) => i.date_returned === null).length < 2) {
       second = 'up to ';
     }
-    const plural = 3 - member.Issues.length !== 1 ? 's' : '';
-    return [name, second, 3 - member.Issues.length, ' book', plural].join('');
+    const plural =
+      3 - member.Issues.filter((i) => i.date_returned === null).length !== 1 ? 's' : '';
+
+    return [
+      name,
+      second,
+      3 - member.Issues.filter((i) => i.date_returned === null).length,
+      ' book',
+      plural,
+    ].join('');
   };
 
   /**
@@ -78,12 +90,12 @@ export const Book: FC = () => {
           />
         </StepTitle>
         <StepContent>
-          {!verifyOverdues() && member.Issues.length < 3 && (
+          {!verifyOverdues() && member.Issues.filter((i) => i.date_returned === null).length < 3 && (
             <>
               <Alert message={renderMessage()} severity="info" /> <br />
             </>
           )}
-          {member.Issues.length > 2 && (
+          {member.Issues.filter((i) => i.date_returned === null).length > 2 && (
             <Alert
               message="Member has reached the limit of simultaneous issues. Please inform them to return a book before issuing again."
               severity="error"
@@ -121,11 +133,11 @@ export const Book: FC = () => {
                   )}
                 </div>
               ))}
-            <Item>
-              {issue.memberState > 1 && (
+            {issue.memberState > 1 && (
+              <Item>
                 <MoreButton text="Issue more" onClick={() => dispatch(addBookOption())} />
-              )}
-            </Item>
+              </Item>
+            )}
           </GridContainer>
         </StepContent>
       </InfoContainer>

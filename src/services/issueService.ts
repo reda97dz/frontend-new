@@ -9,8 +9,12 @@ const config = {
 };
 
 const createIssue = async (issue: Issue) => {
-  const response = await axios.post('api/issues', issue, config);
-  return response;
+  try {
+    const response = await axios.post('api/issues', issue, config);
+    return response;
+  } catch (e) {
+    return { status: 504 };
+  }
 };
 
 const issueService = { createIssue };

@@ -10,6 +10,8 @@ import { selectBooks } from 'app/booksSlice';
 import { Book } from 'types';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { selectAlert } from 'app/alertSlice';
+import { Alert } from 'components/Alert';
 import { isWeekday } from 'utils/misc';
 import { BackButton, IssueButton } from '..';
 import { InfoContainer, StepContent, StepTitle, Title } from '../Issue.style';
@@ -20,6 +22,7 @@ export const Summary: FC = () => {
   const issue = useAppSelector(selectIssue);
   const member = useAppSelector(selectMember);
   const books = useAppSelector(selectBooks);
+  const alert = useAppSelector(selectAlert);
   const dispatch = useAppDispatch();
   const columns = useMemo(
     () => [
@@ -80,6 +83,13 @@ export const Summary: FC = () => {
           )}
         </StepTitle>
         <StepContent>
+          {issue.issueState === 'failed' && (
+            <Alert
+              message="Error confirming issue. Please verify connectivity and try again."
+              severity="warning"
+            />
+          )}
+          <br />
           Member{' '}
           <strong>
             {member.last_name} {member.first_name} ({member.membership_number})
@@ -94,7 +104,7 @@ export const Summary: FC = () => {
               onChange={onChange}
               startDate={new Date(issue.issueDate)}
               endDate={issue.returnDate === '' ? null : new Date(issue.returnDate)}
-              // minDate={moment().toDate()}
+              minDate={moment().toDate()}
               filterDate={isWeekday}
               selectsRange
               withPortal

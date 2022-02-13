@@ -108,9 +108,9 @@ export const Member: FC = () => {
                     {member.membership_number} &#8212; {member.phone_number}
                   </p>
                   <p>
-                    {member.Issues.length} book{member.Issues.length !== 1 && 's'} currently
-                    borrowed.{' '}
-                    {member.Issues.length > 0 && (
+                    {member.Issues.filter((issue) => issue.date_returned === null).length} book
+                    {member.Issues.filter((i) => i.date_returned === null).length !== 1 && 's'} currently borrowed.{' '}
+                    {member.Issues.filter((i) => i.date_returned === null).length > 0 && (
                       <span>
                         <FontAwesomeIcon
                           icon={showIssues ? faEyeSlash : faEye}
@@ -119,12 +119,14 @@ export const Member: FC = () => {
                       </span>
                     )}
                   </p>
-                  {member.Issues.length > 0 && showIssues && (
+                  {member.Issues.filter((i) => i.date_returned === null).length > 0 && showIssues && (
                     <Table
                       light
                       pagination={false}
                       columns={columns}
-                      data={createData(member.Issues)}
+                      data={createData(
+                        member.Issues.filter((issue) => issue.date_returned === null)
+                      )}
                       style={{
                         minWidth: '35em',
                       }}

@@ -40,6 +40,7 @@ export interface Issue {
   books: string;
   date_issued: string;
   date_due_for_return: string;
+  date_returned: string | null;
   member_id: number;
 }
 

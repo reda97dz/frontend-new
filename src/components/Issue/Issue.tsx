@@ -49,16 +49,21 @@ export const IssueButton: FC<IssueButtonProps> = (props) => {
   const { books, ...rest } = props;
 
   const postIssue = () => {
-    const issueList: IssueType[] = [];
+    // const issueList: IssueType[] = [];
     books.forEach((book) => {
-      issueList.push({
-        books: JSON.stringify({ id: book.id, bar_code: book.bar_code, title: book.title }),
-        date_issued: issue.issueDate,
-        date_due_for_return: issue.returnDate,
-        member_id: member.id,
-      });
+      dispatch(
+        createIssue({
+          books: JSON.stringify({ id: book.id, bar_code: book.bar_code, title: book.title }),
+          date_issued: issue.issueDate,
+          date_due_for_return: issue.returnDate,
+          member_id: member.id,
+          date_returned: null,
+        })
+      );
     });
-    dispatch(createIssue(issueList)).then(() => dispatch(nextStep()));
+    if (issue.issueState !== 'failed') {
+      dispatch(nextStep());
+    }
   };
 
   return (

@@ -12,7 +12,6 @@ import { selectBookStatus } from 'app/booksSlice';
 import { selectIssue, setStep } from 'app/issueSlice';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { Container, Step, Icon } from './Stepper.style';
-import { verifyOverdues } from '../Book';
 
 export const Stepper: FC = () => {
   const issue = useAppSelector(selectIssue);
