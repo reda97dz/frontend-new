@@ -25,7 +25,7 @@ module.exports = {
     host: '0.0.0.0',
     // contentBase: '.',
     // inline: true,
-    proxy: { context: ['/api'], target: 'http://localhost:3005/' },
+    proxy: { context: ['/api'], target: 'http://localhost:3003/' },
   },
   devtool: 'cheap-module-source-map',
   stats: 'minimal',

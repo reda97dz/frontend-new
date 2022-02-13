@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import Table from 'components/Table';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
@@ -30,9 +31,31 @@ export const Summary: FC = () => {
         Header: 'Bar Code',
         accessor: 'bar_code',
       },
+      {
+        Header: 'Issue Date',
+        accessor: 'issue_date',
+      },
+      {
+        Header: 'Return Deadline',
+        accessor: 'return_date',
+      },
     ],
     []
   );
+
+  const createData = () => {
+    const data: { title: string; bar_code: number; issue_date: string; return_date: string }[] = [];
+    const booksList = books.filter((b: Book) => issue.bookIds.includes(b.id.toString()));
+    booksList.forEach((book) => {
+      data.push({
+        title: book.title,
+        bar_code: book.bar_code,
+        issue_date: new Date(issue.issueDate).toLocaleDateString('en-us'),
+        return_date: new Date(issue.returnDate).toLocaleDateString('en-us'),
+      });
+    });
+    return data;
+  };
 
   const onChange = (dates: [Date | null, Date | null]) => {
     dispatch(setIssueDate(moment(dates[0]).toDate().toString()));
@@ -62,11 +85,7 @@ export const Summary: FC = () => {
             {member.last_name} {member.first_name} ({member.membership_number})
           </strong>{' '}
           is borrowing the following book{issue.bookIds.length > 1 && 's'}
-          <Table
-            pagination={false}
-            columns={columns}
-            data={books.filter((b: Book) => issue.bookIds.includes(b.id.toString()))}
-          />
+          <Table pagination={false} columns={columns} data={createData()} light={false} />
           <br />
           Edit the date range
           <DatePickerStyle>
@@ -74,7 +93,7 @@ export const Summary: FC = () => {
               selected={new Date(issue.issueDate)}
               onChange={onChange}
               startDate={new Date(issue.issueDate)}
-              endDate={issue.returnDate === '' ? '' : new Date(issue.returnDate)}
+              endDate={issue.returnDate === '' ? null : new Date(issue.returnDate)}
               minDate={moment().toDate()}
               filterDate={isWeekday}
               selectsRange

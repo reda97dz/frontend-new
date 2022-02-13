@@ -50,6 +50,11 @@ export const Footer = styled.div`
     margin: 0;
     color: #03a10a;
   }
+
+  > span {
+    font-weight: bold;
+    color: #f75c03;
+  }
 `;
 
 export const MenuContainer = styled.div`
@@ -68,9 +73,9 @@ export const MenuContent = styled.ul`
     margin-top: 0.1em;
   }
   > :nth-child(2) {
-    color: #ff2e00;
+    color: #f75c03;
     :hover {
-      background-color: #ff2e00;
+      background-color: #f75c03;
     }
   }
 `;

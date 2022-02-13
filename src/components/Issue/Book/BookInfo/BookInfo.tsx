@@ -62,7 +62,7 @@ export const BookInfo: FC<Info> = (props) => {
             <Icon>
               <FontAwesomeIcon icon={faBook} color="#dcdfe5" />
             </Icon>
-            <p> {book.title} </p>
+            <p>{book.title}</p>
           </Title>
           <div>
             <BookMenu number={number} />
@@ -74,6 +74,7 @@ export const BookInfo: FC<Info> = (props) => {
         </Content>
         <Footer>
           <p>{book.bar_code}</p>
+          {!book.available && <span>(book not available)</span>}
           <p>{book.isbn}</p>
         </Footer>
       </Container>

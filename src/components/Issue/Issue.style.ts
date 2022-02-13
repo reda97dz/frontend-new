@@ -38,7 +38,7 @@ export const Header = styled.div`
     right: 1em;
     top: 1em;
     :hover {
-      color: #ff2e00;
+      color: #f75c03;
     }
     :active {
       transform: scale(0.92);

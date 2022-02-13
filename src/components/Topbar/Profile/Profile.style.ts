@@ -38,10 +38,10 @@ export const Menu = styled.ul`
   }
   > :last-child {
     /* color: #ff2e00; */
-    background-color: #ff2e00;
+    background-color: #f75c03;
     :hover {
       background-color: #eaeaea;
-      color: #ff2e00;
+      color: #f75c03;
     }
   }
   @media (max-width: 40em) {

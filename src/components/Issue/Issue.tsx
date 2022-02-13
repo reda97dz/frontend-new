@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { createIssue, nextStep, previousStep, selectIssue } from 'app/issueSlice';
 import Button from 'components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faSpinner, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import ReactTooltip from 'react-tooltip';
 import { Book as BookType, Issue as IssueType } from 'types';
 import { selectBooks } from 'app/booksSlice';
@@ -61,7 +61,15 @@ export const IssueButton: FC<IssueButtonProps> = (props) => {
     dispatch(createIssue(issueList)).then(() => dispatch(nextStep()));
   };
 
-  return <Button text="Issue" color="#03a10a" onClick={postIssue} {...rest} />;
+  return (
+    <div>
+      {issue.issueState === 'pending' ? (
+        <FontAwesomeIcon icon={faSpinner} className="fa-pulse" />
+      ) : (
+        <Button text="Issue" color="#03a10a" onClick={postIssue} {...rest} />
+      )}
+    </div>
+  );
 };
 
 /**

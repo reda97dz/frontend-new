@@ -9,7 +9,7 @@ export const Container = styled.div`
     }
     color: #294c60;
     :hover {
-      color: #ff2e00;
+      color: #f75c03;
     }
   }
 `;

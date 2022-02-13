@@ -1,5 +1,5 @@
 /**
- * It checks if the object is empty or not.
+ * It checks if the object is empty or not. Return true if object is not empty.
  * @param {Object} obj - Object - The object to check.
  */
 export const notEmpty = (obj: Object) => Object.keys(obj).length > 0;

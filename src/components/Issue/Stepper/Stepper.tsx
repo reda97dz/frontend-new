@@ -3,9 +3,12 @@ import {
   faDiceOne,
   faDiceThree,
   faDiceTwo,
+  faSpinner,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FC } from 'react';
+import { selectMemberStatus } from 'app/membersSlice';
+import { selectBookStatus } from 'app/booksSlice';
 import { selectIssue, setStep } from 'app/issueSlice';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { Container, Step, Icon } from './Stepper.style';
@@ -13,6 +16,8 @@ import { Container, Step, Icon } from './Stepper.style';
 export const Stepper: FC = () => {
   const issue = useAppSelector(selectIssue);
   const dispatch = useAppDispatch();
+  const membersStatus = useAppSelector(selectMemberStatus);
+  const booksStatus = useAppSelector(selectBookStatus);
 
   return (
     <Container>
@@ -22,7 +27,11 @@ export const Stepper: FC = () => {
         onClick={() => issue.step !== 1 && dispatch(setStep(1))}
       >
         <Icon>
-          <FontAwesomeIcon icon={faDiceOne} />
+          {membersStatus === 'pending' ? (
+            <FontAwesomeIcon icon={faSpinner} className="fa-pulse" />
+          ) : (
+            <FontAwesomeIcon icon={faDiceOne} />
+          )}
         </Icon>
         <p>Select a member</p>
       </Step>
@@ -32,7 +41,11 @@ export const Stepper: FC = () => {
         onClick={() => issue.bookIds[0] !== '' && dispatch(setStep(2))}
       >
         <Icon>
-          <FontAwesomeIcon icon={faDiceTwo} />
+          {booksStatus === 'pending' ? (
+            <FontAwesomeIcon icon={faSpinner} className="fa-pulse" />
+          ) : (
+            <FontAwesomeIcon icon={faDiceTwo} />
+          )}
         </Icon>
         <p>Select a book</p>
       </Step>

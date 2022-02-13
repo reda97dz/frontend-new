@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const TableStyle = styled.div`
+export const TableStyle = styled.div<{ light?: boolean }>`
   table {
     width: 100%;
     border-collapse: collapse;
@@ -14,6 +14,8 @@ export const TableStyle = styled.div`
 
     tr {
       border-bottom: 1px solid #eaeaea;
+      color: ${(props) => props.light && '#eaeaea'};
+      line-height: 1em;
     }
 
     tr:last-child {
@@ -25,7 +27,7 @@ export const TableStyle = styled.div`
       padding-bottom: 12px;
       border-bottom: 1px solid #eaeaea;
       text-align: left;
-      color: #001b2e;
+      color: ${(props) => (props.light ? '#eaeaea' : '#001b2e')};
     }
   }
 `;

@@ -19,7 +19,7 @@ import {
   TableStyle,
 } from './Table.style';
 
-const Table = ({ columns, data, pagination, rowProps = () => ({}) }) => {
+const Table = ({ columns, data, pagination, light, rowProps = () => ({}), ...rest }) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -45,7 +45,7 @@ const Table = ({ columns, data, pagination, rowProps = () => ({}) }) => {
   );
 
   return (
-    <TableStyle>
+    <TableStyle light={light} {...rest}>
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
