@@ -12,6 +12,7 @@ import { selectBookStatus } from 'app/booksSlice';
 import { selectIssue, setStep } from 'app/issueSlice';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { Container, Step, Icon } from './Stepper.style';
+import { verifyOverdues } from '../Book';
 
 export const Stepper: FC = () => {
   const issue = useAppSelector(selectIssue);
@@ -51,7 +52,7 @@ export const Stepper: FC = () => {
       </Step>
       <Step
         active={issue.step > 2}
-        clickable={issue.bookIds[0] !== '' && issue.step !== 3}
+        clickable={false}
         onClick={() => issue.bookIds[0] !== '' && dispatch(setStep(3))}
       >
         <Icon>

@@ -16,10 +16,11 @@ export const GridContainer = styled.div`
   grid-gap: 0.5em;
   grid-auto-flow: dense;
 `;
-export const Item = styled.div`
+export const Item = styled.div<{ center?: boolean }>`
   min-height: 8.5em;
   display: flex;
   flex-direction: column;
+  ${(props) => props.center && 'align-items: center'};
   > p {
     margin: 0;
   }

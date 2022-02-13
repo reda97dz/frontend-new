@@ -5,7 +5,7 @@ import { Book, MemberIssue } from 'types';
 import { selectIssue } from 'app/issueSlice';
 import ClickAwayListener from 'react-click-away-listener';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faMinusCircle, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { notEmpty } from 'utils/misc';
 import { Container, Option, Options, SelectSearchContainer } from './SelectSearch.style';
 
@@ -88,7 +88,7 @@ export const SelectSearch: FC<SelectSearchProps> = (props) => {
             </Options>
           )}
           {(number !== 0 || issue.bookIds.length > 1) && (
-            <FontAwesomeIcon icon={faTrash} onClick={() => onDeleteBook(number)} />
+            <FontAwesomeIcon icon={faMinusCircle} onClick={() => onDeleteBook(number)} />
           )}
         </Container>
       );

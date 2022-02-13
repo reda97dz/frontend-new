@@ -87,7 +87,7 @@ export const Summary: FC = () => {
           is borrowing the following book{issue.bookIds.length > 1 && 's'}
           <Table pagination={false} columns={columns} data={createData()} light={false} />
           <br />
-          Edit the date range
+          Edit the issue period
           <DatePickerStyle>
             <DatePicker
               selected={new Date(issue.issueDate)}

@@ -12,6 +12,14 @@ import { SelectSearch } from '../SelectSearch';
 import { GridContainer, Item, MoreButton } from './Book.style';
 import { BookInfo } from './BookInfo/BookInfo';
 
+/**
+ * `Returns true if there are any overdue issues.`
+ */
+export const verifyOverdues = () => {
+  const member = useAppSelector(selectMember);
+  return member.Issues.filter((i) => isOverdue(new Date(i.date_due_for_return))).length > 0;
+};
+
 export const Book: FC = () => {
   const dispatch = useAppDispatch();
   const books = useAppSelector(selectBooks);
@@ -34,6 +42,10 @@ export const Book: FC = () => {
     dispatch(removeBook(index));
   };
 
+  /**
+   * Return a custom info message about the selected member's book issues.
+   * @returns A string.
+   */
   const renderMessage = () => {
     const name = `${member.first_name}  ${member.last_name} can borrow `;
     let second = '';
@@ -52,12 +64,6 @@ export const Book: FC = () => {
     const selectedBooks = books.filter((book) => issue.bookIds.includes(book.id.toString()));
     return selectedBooks.some((book) => !book.available);
   };
-
-  /**
-   * `Returns true if there are any overdue issues.`
-   */
-  const verifyOverdues = () =>
-    member.Issues.filter((i) => isOverdue(new Date(i.date_due_for_return))).length > 0;
 
   return (
     <div>
@@ -96,7 +102,7 @@ export const Book: FC = () => {
                 <div>
                   <>
                     {issue.bookIds[i] === '' && (
-                      <Item key={Math.random()}>
+                      <Item key={Math.random()} center>
                         <p>Search for a book #{i + 1} </p>
                         <SelectSearch
                           number={i}

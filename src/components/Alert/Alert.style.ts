@@ -4,6 +4,7 @@ export const Container = styled.div<{ color: string }>`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
+  cursor: pointer;
   justify-content: flex-start;
   > div + p {
     margin-left: 0.5em;

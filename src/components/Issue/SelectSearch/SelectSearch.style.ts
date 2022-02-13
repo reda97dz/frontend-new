@@ -2,7 +2,9 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   > svg {
+    position: absolute;
     margin-left: 0.5em;
+    margin-top: 0.5em;
     cursor: pointer;
     :active {
       transform: scale(0.9);
