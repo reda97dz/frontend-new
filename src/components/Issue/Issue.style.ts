@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+export const Relative = styled.div`
+  position: relative;
+`;
+
 export const Container = styled.div`
   position: fixed;
   z-index: 2;
@@ -9,11 +13,48 @@ export const Container = styled.div`
   bottom: 3em;
   background-color: white;
   padding: 1em;
-  border-radius: 4px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  @media (max-width: 40em) {
+    left: 0.5em;
+    right: 0.5em;
+    top: 5em;
+    bottom: 2em;
+  }
+`;
+
+export const Header = styled.div`
+  > h3 {
+    margin: 0 0 0.4em;
+    cursor: pointer;
+    color: #001b2e;
+    font-weight: bolder;
+  }
+  > svg {
+    cursor: pointer;
+    color: #294c60;
+    position: absolute;
+    right: 1em;
+    top: 1em;
+    :hover {
+      color: #f75c03;
+    }
+    :active {
+      transform: scale(0.92);
+    }
+  }
+`;
+
+export const ContentContainer = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: row;
   > * + * {
-    margin-left: 1em;
+    margin-left: 0.7em;
+    @media (max-width: 60em) {
+      margin-left: 0;
+    }
   }
   > :first-child {
     position: relative;
@@ -33,27 +74,38 @@ export const ModalBackdrop = styled.div`
 export const Content = styled.div`
   flex: 1;
   background-color: #adb6c4;
-  /* padding: 1em; */
-  border-radius: 4px;
+  border-radius: 6px;
   display: flex;
   flex-direction: column;
 `;
 
 export const InfoContainer = styled.div`
-  display: grid;
-  grid-template-columns: auto;
-  grid-template-rows: repeat(2, auto);
+  display: flex;
+  flex-direction: column;
+  /* border: 1px dashed red; */
   /* grid-gap: 1em; */
 `;
 
+export const StepContent = styled.div`
+  top: 7em;
+  left: 13em;
+  right: 1em;
+  bottom: 1em;
+  padding: 1em;
+  flex: 1;
+  overflow-y: scroll;
+  position: absolute;
+  @media (max-width: 60em) {
+    left: 1em;
+  }
+`;
+
 export const StepTitle = styled.div`
-  grid-row: 1/2;
   display: flex;
   align-items: center;
-  /* border: dashed 1px #001b2e; */
   margin: 0.5em;
   background-color: #001b2e;
-  padding: 0.5em;
+  padding: 0.3em 0.5em;
   border-radius: 4px;
   justify-content: space-between;
 `;
@@ -61,8 +113,11 @@ export const StepTitle = styled.div`
 export const Title = styled.div`
   display: flex;
   align-items: center;
+  > div {
+    margin: 0 0.3em;
+  }
   > div + h3 {
-    margin-left: 0.8em;
+    margin-left: 0.5em;
     color: #eaeaea;
   }
   > h3 {
@@ -82,9 +137,4 @@ export const Icon = styled.div<{ disabled?: boolean }>`
   :hover {
     ${(props) => !props.disabled && 'opacity: 0.98'};
   }
-`;
-
-export const StepContent = styled.div`
-  grid-row: 2/3;
-  padding: 1em;
 `;

@@ -10,7 +10,24 @@ export const Container = styled.div`
   }
 `;
 
+export const GridContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18em, 1fr));
+  grid-gap: 0.5em;
+  grid-auto-flow: dense;
+`;
+export const Item = styled.div<{ center?: boolean }>`
+  min-height: 8.5em;
+  display: flex;
+  flex-direction: column;
+  ${(props) => props.center && 'align-items: center'};
+  > p {
+    margin: 0;
+  }
+`;
+
 export const MoreButton = styled(Button)`
+  flex: 1;
   background-color: transparent;
   border: 1px dashed #03a10a;
   padding: 0 2em;

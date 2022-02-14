@@ -10,6 +10,10 @@ export const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media (max-width: 40em) {
+    width: 100%;
+    margin-left: 0;
+  }
 `;
 
 export const Toggle = styled.button`
@@ -35,6 +39,9 @@ export const Toggle = styled.button`
     left: 0.5em;
     color: #294c60;
   }
+  @media (min-width: 40em) {
+    display: none;
+  }
 `;
 
 export const Title = styled.h3`
@@ -42,4 +49,7 @@ export const Title = styled.h3`
   color: #294c60;
   font-weight: bolder;
   text-transform: capitalize;
+  @media (min-width: 40em) {
+    margin-left: 0.7em;
+  }
 `;
