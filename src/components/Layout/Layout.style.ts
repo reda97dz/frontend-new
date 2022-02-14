@@ -11,4 +11,8 @@ export const MainContent = styled.div`
   z-index: -1;
   background-color: #dcdfe5;
   padding: 1em;
+  @media (max-width: 40em) {
+    width: 100%;
+    margin-left: 0;
+  }
 `;

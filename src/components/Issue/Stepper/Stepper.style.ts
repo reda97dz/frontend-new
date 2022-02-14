@@ -2,21 +2,34 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   background-color: #294c60;
-  padding: 1em;
-  border-radius: 4px;
+  padding: 0.5em;
+  border-radius: 6px;
   color: #eaeaea;
   > * + * {
-    margin-top: 1em;
+    margin-top: 0.5em;
+  }
+  @media (max-width: 60em) {
+    display: none;
   }
 `;
 
-export const Step = styled.div<{ active?: boolean }>`
+export const Step = styled.div<{ active?: boolean; clickable?: boolean }>`
   background-color: #dcdfe5;
   border-radius: 4px;
   padding: 0.3em 0.5em;
   font-family: 'Cairo';
   opacity: 0.5;
   ${(props) => props.active && 'opacity: 100'};
+  cursor: default;
+
+  ${(props) =>
+    props.clickable &&
+    `
+      :hover {
+        cursor: pointer;
+        opacity: 0.8;
+      }
+    `};
 
   display: flex;
 

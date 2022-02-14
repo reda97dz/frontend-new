@@ -20,7 +20,13 @@ try {
 
 module.exports = {
   mode: 'development',
-  devServer: { hot: true },
+  devServer: {
+    hot: true,
+    host: '0.0.0.0',
+    // contentBase: '.',
+    // inline: true,
+    proxy: { context: ['/api'], target: 'http://localhost:3003/' },
+  },
   devtool: 'cheap-module-source-map',
   stats: 'minimal',
   // incase failures for webpack react-refresh add HotModuleReplacementPlugin

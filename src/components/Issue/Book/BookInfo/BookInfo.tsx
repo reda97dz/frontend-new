@@ -1,48 +1,83 @@
-import { faBook, faEdit, faMinusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faBook, faEllipsisH } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { clearBook, removeBook, selectIssue } from 'app/issueSlice';
 import { Icon } from 'components/Issue/Stepper/Stepper.style';
-import { FC } from 'react';
-import { Container, Content, Footer, Header, Title } from './BookInfo.style';
+import { FC, useState } from 'react';
+import ClickAwayListener from 'react-click-away-listener';
+import { Book } from 'types';
+import {
+  Container,
+  Content,
+  Footer,
+  Header,
+  MenuContainer,
+  MenuContent,
+  MenuItem,
+  Title,
+  Tile,
+} from './BookInfo.style';
+
+export const BookMenu: FC<{ number: number }> = (props) => {
+  const issue = useAppSelector(selectIssue);
+  const dispatch = useAppDispatch();
+  const [open, setOpen] = useState(false);
+  const { number } = props;
+  return (
+    <MenuContainer>
+      <FontAwesomeIcon icon={faEllipsisH} onClick={() => setOpen(!open)} color="#03a10a" />
+      {open && (
+        <ClickAwayListener onClickAway={() => setOpen(false)}>
+          <MenuContent>
+            <MenuItem onClick={() => dispatch(clearBook(number))}>Edit</MenuItem>
+            {(number !== 0 || issue.bookIds.length > 1) && (
+              <MenuItem
+                onClick={() => {
+                  dispatch(removeBook(number));
+                  setOpen(false);
+                }}
+              >
+                Remove
+              </MenuItem>
+            )}
+          </MenuContent>
+        </ClickAwayListener>
+      )}
+    </MenuContainer>
+  );
+};
 
 interface Info {
   number: number;
+  book: Book;
 }
 
 export const BookInfo: FC<Info> = (props) => {
-  const issue = useAppSelector(selectIssue);
-  const dispatch = useAppDispatch();
-  const { number } = props;
+  const { number, book } = props;
   return (
-    <Container>
-      <Header>
-        <Title>
-          <Icon>
-            <FontAwesomeIcon icon={faBook} color="#fff" />
-          </Icon>
-          <p>Title right here</p>
-        </Title>
-        <div>
-          <FontAwesomeIcon icon={faEdit} color="#fff" onClick={() => dispatch(clearBook(number))} />
-          {'     '}
-          {(number !== 0 || issue.bookIds.length > 1) && (
-            <FontAwesomeIcon
-              icon={faMinusCircle}
-              color="#f00"
-              onClick={() => dispatch(removeBook(number))}
-            />
-          )}
-        </div>
-      </Header>
-      <Content>
-        <p>Author</p>
-        <p>Category</p>
-      </Content>
-      <Footer>
-        <p>ref</p>
-        <p>ref</p>
-      </Footer>
-    </Container>
+    <Tile>
+      <Container>
+        <Header>
+          <Title>
+            <Icon>
+              <FontAwesomeIcon icon={faBook} color="#dcdfe5" />
+            </Icon>
+            <p>{book.title}</p>
+          </Title>
+          <div>
+            <BookMenu number={number} />
+          </div>
+        </Header>
+        <Content>
+          <p>{book.author}</p>
+          <p>{book.year}</p>
+        </Content>
+        <Footer>
+          <p>{book.bar_code}</p>
+          {!book.available && <span>(book not available)</span>}
+          <p>{book.isbn}</p>
+        </Footer>
+      </Container>
+    </Tile>
   );
 };

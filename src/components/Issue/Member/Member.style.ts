@@ -23,11 +23,15 @@ export const DisplayContainer = styled.div`
   display: flex;
   border-radius: 4px;
   background-color: #294c60;
+  overflow-x: scroll;
   flex-direction: column;
   padding: 0.8em;
   > p {
     margin: 0;
     color: #eaeaea;
+    > span {
+      cursor: pointer;
+    }
   }
 `;
 
