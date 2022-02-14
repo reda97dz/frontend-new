@@ -16,7 +16,7 @@ export const Container = styled.div`
   }
 `;
 
-export const SelectSearchContainer = styled.div`
+export const SelectSearchContainer = styled.div<{ placeholderColor?: boolean }>`
   display: inline-block;
   position: relative;
   input {
@@ -39,7 +39,7 @@ export const SelectSearchContainer = styled.div`
       /* box-shadow: 1px 0 1px rgba(0, 0, 0, 0.5); */
     }
     ::placeholder {
-      color: black;
+      color: ${(props) => (props.placeholderColor ? '#294c60' : '#1e1e1e')};
       opacity: 1;
     }
   }
