@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable no-shadow */
 /* eslint-disable react/button-has-type */
 import {
@@ -5,9 +6,12 @@ import {
   faAngleDoubleRight,
   faAngleLeft,
   faAngleRight,
+  faSort,
+  faSortDown,
+  faSortUp,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useTable, usePagination } from 'react-table';
+import { useTable, usePagination, useSortBy } from 'react-table';
 import {
   First,
   Goto,
@@ -39,8 +43,9 @@ const Table = ({ columns, data, pagination, light, rowProps = () => ({}), ...res
     {
       columns,
       data,
-      initialState: { pageIndex: 0 },
+      initialState: { sortBy: [{ id: 'return_date' }], pageIndex: 0 },
     },
+    useSortBy,
     usePagination
   );
 
@@ -51,7 +56,20 @@ const Table = ({ columns, data, pagination, light, rowProps = () => ({}), ...res
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}> {column.render('Header')} </th>
+                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  <span>
+                    {column.isSorted ? (
+                      column.isSortedDesc ? (
+                        <FontAwesomeIcon icon={faSortDown} color="#001b2e" />
+                      ) : (
+                        <FontAwesomeIcon icon={faSortUp} color="#001b2e" />
+                      )
+                    ) : (
+                      ''
+                    )}
+                  </span>
+                  {column.render('Header')}
+                </th>
               ))}
             </tr>
           ))}
@@ -90,7 +108,7 @@ const Table = ({ columns, data, pagination, light, rowProps = () => ({}), ...res
             <FontAwesomeIcon icon={faAngleDoubleRight} />
           </Last>
           <Goto>
-            Aller vers
+            Go to
             <input
               type="number"
               defaultValue={pageIndex + 1}
@@ -109,7 +127,7 @@ const Table = ({ columns, data, pagination, light, rowProps = () => ({}), ...res
           >
             {[5, 10, 20, 30, 40, 50].map((pageSize) => (
               <option key={pageSize} value={pageSize}>
-                Afficher {pageSize}
+                Show {pageSize}
               </option>
             ))}
           </Show>

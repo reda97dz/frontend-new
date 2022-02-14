@@ -10,6 +10,28 @@ export const TableStyle = styled.div<{ light?: boolean }>`
     th {
       padding: 8px;
       border: 0;
+      position: relative;
+      span {
+        position: absolute;
+        left: -0.3em;
+      }
+      :last-child {
+        text-align: center;
+        :hover {
+          color: green;
+        }
+      }
+      @media (max-width: 60em) {
+        :nth-child(4) {
+          display: none;
+        }
+      }
+
+      @media (max-width: 40em) {
+        :nth-child(1) {
+          display: none;
+        }
+      }
     }
 
     tr {
@@ -33,7 +55,7 @@ export const TableStyle = styled.div<{ light?: boolean }>`
 `;
 
 export const Pagination = styled.div`
-  padding: 1em;
+  padding: 0.5em;
   margin-top: 1.5em;
   background-color: #001b2e;
   border-radius: 2px;
