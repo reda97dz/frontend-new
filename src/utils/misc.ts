@@ -24,3 +24,9 @@ export const isOverdue = (date: Date) => {
   const today = moment(new Date());
   return today.isAfter(moment(date));
 };
+
+/**
+ * It takes a string and replaces any special characters with a backslash.
+ * @param {string} value - The string to be escaped.
+ */
+export const escapeRegExp = (value: string) => value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');

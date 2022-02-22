@@ -9,6 +9,7 @@ import ReactTooltip from 'react-tooltip';
 import { Book as BookType, Issue as IssueType } from 'types';
 import { selectBooks } from 'app/booksSlice';
 import { selectMember } from 'app/memberSlice';
+import { IssueList } from 'components/IssueList';
 import {
   Container,
   Content,
@@ -133,6 +134,7 @@ export const Issue: FC = () => {
           </Container>
         </Relative>
       )}
+      <IssueList />
     </>
   );
 };
