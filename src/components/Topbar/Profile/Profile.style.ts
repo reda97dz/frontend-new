@@ -14,6 +14,9 @@ export const Container = styled.div`
   cursor: pointer;
   > * + * {
     margin-left: 0.3em;
+    @media (max-width: 40em) {
+      margin-left: 0;
+    }
   }
   > p {
     color: #001b2e;

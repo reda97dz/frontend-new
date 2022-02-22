@@ -6,6 +6,7 @@ export const Container = styled.div`
   padding: 2em;
   display: flex;
   flex-direction: column;
+  overflow-x: auto;
   > * + * {
     margin-top: 0.5em;
   }

@@ -1,12 +1,14 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable consistent-return */
 import { selectMember } from 'app/memberSlice';
 import { useAppSelector } from 'app/hooks';
 import { FC, useState } from 'react';
-import { Book, MemberIssue } from 'types';
+import { Book, Member, MemberIssue } from 'types';
 import { selectIssue } from 'app/issueSlice';
 import ClickAwayListener from 'react-click-away-listener';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinusCircle, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { notEmpty } from 'utils/misc';
+import { escapeRegExp, notEmpty } from 'utils/misc';
 import { Container, Option, Options, SelectSearchContainer } from './SelectSearch.style';
 
 interface SelectSearchBookProps {
@@ -32,12 +34,16 @@ type SelectSearchProps = SelectSearchBookProps | SelectSearchMemberProps;
  */
 export const SelectSearch: FC<SelectSearchProps> = (props) => {
   const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState('');
+  const searchRegex = new RegExp(escapeRegExp(query), 'i');
+
   const member = useAppSelector(selectMember);
   const issue = useAppSelector(selectIssue);
   const { onClick, type } = props;
 
   const onClickMember = (m: MemberIssue) => {
     onClick(m);
+    setQuery('');
     setOpen(false);
   };
 
@@ -73,13 +79,32 @@ export const SelectSearch: FC<SelectSearchProps> = (props) => {
       return (
         <Container>
           <SelectSearchContainer onClick={() => setOpen(true)}>
-            <input type="text" value={issue.bookIds[number] || 'select a book'} />
+            <input
+              type="text"
+              value={issue.bookIds[number] || query}
+              placeholder="Select a book"
+              onChange={(event) => setQuery(event.target.value)}
+            />
           </SelectSearchContainer>
           {open && (
             <Options>
               {options
                 .filter((b: Book) => b.Category.name !== 'REFERENCE')
                 .filter((b: Book) => !issue.bookIds.includes(b.id.toString()))
+                .filter((b: Book) => {
+                  if (query === '') {
+                    return b;
+                  }
+                  if (
+                    Object.keys(b).some((field) => {
+                      if (b[field as keyof Book]) {
+                        return searchRegex.test(b[field as keyof Book].toString());
+                      }
+                    })
+                  ) {
+                    return b;
+                  }
+                })
                 .map((option: Book) => (
                   <Option key={option.id} onClick={() => onClickBook(option, number)}>
                     {option.title}
@@ -94,29 +119,45 @@ export const SelectSearch: FC<SelectSearchProps> = (props) => {
       );
     }
     const { options } = props;
+    const placeholderValue = notEmpty(member)
+      ? `${member.membership_number} ${member.first_name} ${member.last_name}`
+      : 'Select a member';
     return (
       <>
-        <SelectSearchContainer onClick={() => setOpen(true)}>
+        <SelectSearchContainer onClick={() => setOpen(true)} placeholderColor={notEmpty(member)}>
           <input
             type="text"
-            value={
-              notEmpty(member)
-                ? `${member.membership_number} - ${member.last_name} ${member.first_name}`
-                : 'select a member'
-            }
+            placeholder={placeholderValue}
+            onChange={(event) => setQuery(event.target.value)}
+            value={query}
           />
         </SelectSearchContainer>
         {open && (
           <Options>
-            {options.map((option: MemberIssue) => (
-              <Option
-                key={option.id}
-                onClick={() => onClickMember(option)}
-                selected={option.membership_number === member.membership_number}
-              >
-                <span>{option.membership_number}</span> {option.first_name} {option.last_name}
-              </Option>
-            ))}
+            {options
+              .filter((m: MemberIssue) => {
+                if (query === '') {
+                  return m;
+                }
+                if (
+                  Object.keys(m).some((field) => {
+                    if (m[field as keyof MemberIssue]) {
+                      return searchRegex.test(m[field as keyof MemberIssue].toString());
+                    }
+                  })
+                ) {
+                  return m;
+                }
+              })
+              .map((option: MemberIssue) => (
+                <Option
+                  key={option.id}
+                  onClick={() => onClickMember(option)}
+                  selected={option.membership_number === member.membership_number}
+                >
+                  <span>{option.membership_number}</span> {option.first_name} {option.last_name}
+                </Option>
+              ))}
           </Options>
         )}
       </>

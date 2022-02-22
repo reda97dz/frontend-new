@@ -109,7 +109,8 @@ export const Member: FC = () => {
                   </p>
                   <p>
                     {member.Issues.filter((issue) => issue.date_returned === null).length} book
-                    {member.Issues.filter((i) => i.date_returned === null).length !== 1 && 's'} currently borrowed.{' '}
+                    {member.Issues.filter((i) => i.date_returned === null).length !== 1 && 's'}{' '}
+                    currently borrowed.{' '}
                     {member.Issues.filter((i) => i.date_returned === null).length > 0 && (
                       <span>
                         <FontAwesomeIcon

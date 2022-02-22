@@ -56,3 +56,14 @@ export interface MemberIssue {
   membership_end: string;
   Issues: Issue[];
 }
+
+export interface IssuesItem extends Issue {
+  id: number;
+  Member: {
+    first_name: string;
+    last_name: string;
+    membership_number: string;
+    phone_number: string;
+    email: string;
+  };
+}
